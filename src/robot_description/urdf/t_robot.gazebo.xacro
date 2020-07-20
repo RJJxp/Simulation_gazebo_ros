@@ -49,43 +49,46 @@
   </gazebo>
 
   <!-- robot laser setup in gazebo -->
-  <gazebo reference="robot_scan_link">
+  <gazebo reference="robot_laser_link">
     <material>Gazebo/Red</material>
-    <sensor type="ray" name="lds_lfcd_sensor">
-      <pose>0 0 0 0 0 0</pose>
-      <visualize>$(arg laser_visual)</visualize>
-      <update_rate>10</update_rate>
-      <ray>
-        <scan>
-          <vertical>
-            <samples>90</samples>
-            <resolution>1</resolution>
-            <min_angle>-0.2</min_angle>
-            <max_angle>+1.3</max_angle>
-          </vertical>
-          <!-- <horizontal>
-            <samples>90</samples>
-            <resolution>1</resolution>
-            <min_angle>-1.57</min_angle>
-            <max_angle>+1.57</max_angle>
-          </horizontal> -->
-        </scan>
-        <range>
-          <min>0.120</min>
-          <max>3.5</max>
-          <resolution>0.015</resolution>
-        </range>
-        <noise>
-          <type>gaussian</type>
-          <mean>0.0</mean>
-          <stddev>0.01</stddev>
-        </noise>
-      </ray>
-      <plugin name="gazebo_ros_lds_lfcd_controller" filename="libgazebo_ros_laser.so">
-        <topicName>scan</topicName>
-        <frameName>robot_scan_link</frameName>
-      </plugin>
-    </sensor>
+    <sensor type="ray" name="laser_16">
+        <pose>0 0 0 0 0 0</pose>
+        <visualize>true</visualize>
+        <update_rate>10</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>90</samples>
+              <resolution>1</resolution>
+              <min_angle>-0.5</min_angle>
+              <max_angle>+0.5</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>16</samples>
+              <resolution>1</resolution>
+              <min_angle>-${15.0*3.1415/180.0}</min_angle>
+              <max_angle> ${15.0*3.1415/180.0}</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>0.2</min>
+            <max>1</max>
+            <resolution>0.01</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.0</stddev>
+          </noise>
+        </ray>
+        <plugin name="gazebo_ros_laser_controller" filename="libgazebo_ros_velodyne_laser.so">
+          <topicName>/pointcloud222</topicName>
+          <frameName>robot_laser_link</frameName>
+          <min_range>0.2</min_range>
+          <max_range>1.0</max_range>
+          <gaussianNoise>0.008</gaussianNoise>
+        </plugin>
+      </sensor>
   </gazebo>
 
   <!-- 2 wheels -->

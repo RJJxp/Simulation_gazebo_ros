@@ -48,25 +48,26 @@
     </inertial>
   </link>
 
-  <!-- joint of robot body link and laser -->
-  <joint name="body_scan_joint" type="continuous">
-    <parent link="robot_body_link"/>
-    <child link="robot_scan_link"/>
-    <origin xyz="0 0 ${height/2+0.01+lidar_above}" rpy="0 0 0"/>
-    <axis xyz="0 0 1"/>
-  </joint>
-
   <!-- imu joint -->
   <joint name="imu_joint" type="fixed">
     <parent link="robot_body_link"/>
     <child link="imu_link"/>
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
+  
   <!-- imu link -->
   <link name="imu_link"/>
 
+  <!-- joint of robot body link and laser -->
+  <joint name="body_scan_joint" type="fixed">
+    <parent link="robot_body_link"/>
+    <child link="robot_laser_link"/>
+    <origin xyz="0 0 ${height/2+0.01+lidar_above}" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
   <!-- laser sensor link -->
-  <link name="robot_scan_link"> 
+  <link name="robot_laser_link"> 
     <visual>
       <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
       <geometry>
@@ -91,7 +92,6 @@
     </inertial>
   </link>
 
-  <!-- TODO: the direction of the 2 wheels -->
   <!-- joint of robot body link and left wheel -->
   <joint name="wheel_left_joint" type="continuous">
     <parent link="robot_body_link"/>
