@@ -67,12 +67,12 @@
               <samples>16</samples>
               <resolution>1</resolution>
               <min_angle>-${15.0*3.1415/180.0}</min_angle>
-              <max_angle> ${15.0*3.1415/180.0}</max_angle>
+              <max_angle>+${15.0*3.1415/180.0}</max_angle>
             </vertical>
           </scan>
           <range>
             <min>0.2</min>
-            <max>1</max>
+            <max>5</max>
             <resolution>0.01</resolution>
           </range>
           <noise>
@@ -85,7 +85,7 @@
           <topicName>/pointcloud222</topicName>
           <frameName>robot_laser_link</frameName>
           <min_range>0.2</min_range>
-          <max_range>1.0</max_range>
+          <max_range>5.0</max_range>
           <gaussianNoise>0.008</gaussianNoise>
         </plugin>
       </sensor>
@@ -153,9 +153,92 @@
       <rightJoint>wheel_right_joint</rightJoint>
       <wheelSeparation>0.46</wheelSeparation>
       <wheelDiameter>0.1</wheelDiameter>
-      <wheelAcceleration>1</wheelAcceleration>
+      <wheelAcceleration>100</wheelAcceleration>
       <wheelTorque>10</wheelTorque>
       <rosDebugLevel>na</rosDebugLevel>
     </plugin>
+  </gazebo>
+
+  <!-- sonar plugin -->
+  <gazebo reference="sonar_01_link">
+    <material>Gazebo/ZincYellow</material>
+    <sensor type="ray" name="sonar_01_link">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>5</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>5</samples>
+            <resolution>1.0</resolution>
+            <min_angle>-0.25</min_angle>
+            <max_angle>0.25</max_angle>
+          </horizontal>
+          <vertical>
+            <samples>5</samples>
+            <resolution>1</resolution>
+            <min_angle>-0.25</min_angle>
+            <max_angle>0.25</max_angle>
+          </vertical>
+        </scan>
+        <range>
+          <min>0.03</min>
+          <max>0.2</max>
+          <resolution>0.01</resolution>
+        </range>
+      </ray>
+      <plugin name="sonar_01_plugin" filename="libgazebo_ros_range.so">
+        <gaussianNoise>0.005</gaussianNoise>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>5</updateRate>  
+        <topicName>sonar_01</topicName>
+        <frameName>sonar_01_link</frameName>
+        <!-- field of view = (max_angle - min_angle) -->
+        <!--               = 2 max_angle -->
+        <fov>0.5</fov>
+        <radiation>ultrasound</radiation>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <gazebo reference="sonar_02_link">
+    <material>Gazebo/ZincYellow</material>
+    <sensor type="ray" name="sonar_02_link">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>5</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>5</samples>
+            <resolution>1.0</resolution>
+            <min_angle>-0.25</min_angle>
+            <max_angle>0.25</max_angle>
+          </horizontal>
+          <vertical>
+            <samples>5</samples>
+            <resolution>1</resolution>
+            <min_angle>-0.25</min_angle>
+            <max_angle>0.25</max_angle>
+          </vertical>
+        </scan>
+        <range>
+          <min>0.03</min>
+          <max>0.2</max>
+          <resolution>0.01</resolution>
+        </range>
+      </ray>
+      <plugin name="sonar_02_plugin" filename="libgazebo_ros_range.so">
+        <gaussianNoise>0.005</gaussianNoise>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>5</updateRate>  
+        <topicName>sonar_02</topicName>
+        <frameName>sonar_02_link</frameName>
+        <!-- field of view = (max_angle - min_angle) -->
+        <!--               = 2 max_angle -->
+        <fov>0.5</fov>
+        <radiation>ultrasound</radiation>
+      </plugin>
+    </sensor>
   </gazebo>
 </robot>

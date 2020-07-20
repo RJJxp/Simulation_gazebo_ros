@@ -158,13 +158,13 @@
     </inertial>
   </link>
 
-  <!-- 2 caster wheel of front and back -->
+  <!-- caster back joint -->
   <joint name="caster_back_joint" type="fixed">
     <parent link="robot_body_link"/>
     <child link="caster_back_link"/>
     <origin xyz="${-length/2} 0 ${-height/2-0.025}" rpy="0 0 0"/>
   </joint>
-
+  <!-- caseter back link -->
   <link name="caster_back_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -196,7 +196,7 @@
     <child link="caster_front_link"/>
     <origin xyz="${length/2} 0 ${-height/2-0.025}" rpy="0 0 0"/>
   </joint>
-
+  <!-- caster front link -->
   <link name="caster_front_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -222,4 +222,68 @@
     </inertial>
   </link>
 
+  <!-- sonar joint -->
+  <joint name="sonar_01_joint" type="fixed">
+    <parent link="robot_body_link"/>
+    <child link="sonar_01_link"/>
+    <origin xyz="${length/6} ${width/2+0.01} 0" rpy="0 0 ${PI/2}"/>
+  </joint>
+  <!-- sonar link -->
+  <link name="sonar_01_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+      <material name="brown" />
+    </visual>
+    
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.001" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+               iyy="0.001" iyz="0.0"
+               izz="0.001" />
+    </inertial>
+  </link>
+
+
+  <!-- sonar joint -->
+  <joint name="sonar_02_joint" type="fixed">
+    <parent link="robot_body_link"/>
+    <child link="sonar_02_link"/>
+    <origin xyz="${length/6} ${-width/2-0.01} 0" rpy="0 0 ${-PI/2}"/>
+  </joint>
+  <!-- sonar link -->
+  <link name="sonar_02_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+      <material name="brown" />
+    </visual>
+    
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.001" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+               iyy="0.001" iyz="0.0"
+               izz="0.001" />
+    </inertial>
+  </link>
 </robot>
