@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!-- Tergeo Washing Floor Robot macros -->
+<!-- Macros by rjp to simplify the xacro -->
+
+
+<robot name="tergeo_macros" xmlns:xacro="TergeoRobotMacros">
+  <!-- Import all designed robot model args  -->
+  <xacro:include filename="$(find robot_description)/urdf/t_robot_args.xacro"/>
+  <!-- macro to generate wheel -->
+  <xacro:macro name="gen_wheel" params="side">
+    <!-- Diff between left and right wheel -->
+    <!-- xyz roll pitch yaw in joint -->
+    <xacro:if value="${side == 'left'}">
+      <xacro:property name="xyz" value="0 0 0"/>
+      <xacro:property name="rpy" value="${PI/2} 0 0"/>
+    </xacro:if>
+    <xacro:if value="${side == 'right'}">
+      <xacro:property name="xyz" value="0 0 0"/>
+      <xacro:property name="rpy" value="-${PI/2} 0 0"/>
+    </xacro:if>
+
+  </xacro:macro>
+
+
+
+</robot>
