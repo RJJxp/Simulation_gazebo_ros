@@ -27,7 +27,7 @@
   <xacro:property name="caster_radius" value="0.01"/> 
   <!-- Distance between groud and robot which indicates the wheel's origin -->
   <!-- origin.z = wheel_radius - dis_robot_ground -->
-  <xacro:property name="dis_robot_groud" value="0.05"/>
+  <xacro:property name="dis_robot_groud" value="0.1"/>
   <!-- Distance between wheels and robot body side -->
   <!-- This arg determines the y coordinates of wheel -->
   <xacro:property name="dis_robot_wheel" value="0.01"/>
