@@ -1,0 +1,13 @@
+<launch>
+  <!-- args -->
+  <arg name="model" default="$(find robot_description)/urdf/tergeo.urdf.xacro"/>
+  <arg name="rvizconfig" default="$(find robot_description)/rviz/robot_in_rviz.rviz"/>
+  <!-- param -->
+  <param name="robot_description" command="$(find xacro)/xacro $(arg model)"/>
+  <!-- two publisher node -->
+  <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui"/>
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+  <!-- rviz node -->
+  <node name="robot_rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)"/>
+</launch>
+

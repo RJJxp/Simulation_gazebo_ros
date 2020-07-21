@@ -19,7 +19,7 @@
   <joint name="world_robot_joint" type="fixed">
     <parent link="base_world"/>
     <child link="robot_body_link"/> 
-    <origin xyz="0.0 0.0 ${height/2 + dis_robot_groud - 0.01}" rpy="0 0 0"/>
+    <origin xyz="0.0 0.0 ${height/2 + wheel_radius - 0.01}" rpy="0 0 0"/>
   </joint> 
 
   <!-- the robot body link -->
@@ -184,7 +184,7 @@
   <joint name="caster_back_joint" type="fixed">
     <parent link="robot_body_link"/>
     <child link="caster_back_link"/>
-    <origin xyz="${-length/2} 0 ${-height/2-0.025}" rpy="0 0 0"/>
+    <origin xyz="${-length/2} 0 ${-height/2-0.05}" rpy="0 0 0"/>
   </joint>
   <!-- caseter back link -->
   <link name="caster_back_link">
@@ -205,7 +205,7 @@
 
     <inertial>
       <origin xyz="0 0 0" />
-      <mass value="0.005" />
+      <mass value="1" />
       <inertia ixx="0.001" ixy="0.0" ixz="0.0"
                iyy="0.001" iyz="0.0"
                izz="0.001" />
@@ -216,7 +216,7 @@
   <joint name="caster_front_joint" type="fixed">
     <parent link="robot_body_link"/>
     <child link="caster_front_link"/>
-    <origin xyz="${length/2} 0 ${-height/2-0.025}" rpy="0 0 0"/>
+    <origin xyz="${length/2} 0 ${-height/2-0.05}" rpy="0 0 0"/>
   </joint>
   <!-- caster front link -->
   <link name="caster_front_link">
@@ -227,7 +227,7 @@
       </geometry>
       <material name="white" />
     </visual>
-    c
+    
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
@@ -237,7 +237,7 @@
 
     <inertial>
       <origin xyz="0 0 0" />
-      <mass value="0.005" />
+      <mass value="1" />
       <inertia ixx="0.001" ixy="0.0" ixz="0.0"
                iyy="0.001" iyz="0.0"
                izz="0.001" />

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!-- Tergeo Washing Floor Robot -->
+<robot name="tergeo" xmlns:xacro="TergeoRobot">
+  <!-- Import all designed robot model args  -->
+  <xacro:include filename="$(find robot_description)/urdf/t_robot_args.xacro"/>
+  <!-- Import Rviz colors -->
+  <xacro:include filename="$(find robot_description)/urdf/rviz_materials.xacro"/>
+  <!-- Import all the macros -->
+  <xacro:include filename="$(find robot_description)/urdf/parts/*.xacro"/>
+
+  <xacro:base_world world_name="base_world" body_name="body" mass="${mass}" length="${length}" width="${width}" height="${height}" wheel_radius="${wheel_radius}"/>
+
+  
+
+
+
+</robot>
