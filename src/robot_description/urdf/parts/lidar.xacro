@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<robot xmlns:xacro="TergeoRobot" name="tergeo">
-  <!-- macro to generate world and robot main body -->
-  <xacro:macro name="base_world" params="world_name body_name mass length width height wheel_radius">
-    
-
-  </xacro:macro>
-
-</robot>

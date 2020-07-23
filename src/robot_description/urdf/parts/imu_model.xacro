@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="TergeoRobot" name="tergeo">
+  <!-- args -->
+  <xacro:property name="imu_topic_name" value="imu" />
+  <xacro:property name="imu_service_name" value="imu_service" />
+  <!-- Macro definition -->
+  <xacro:macro name="imu_model" params="imu_name parent_link imu_xyz imu_rpy">
+    <!-- imu joint -->
+    <joint name="${imu_name}_joint" type="fixed">
+      <parent link="${parent_link}"/>
+      <child link="${imu_name}_link"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+  
+    <!-- imu link -->
+    <link name="${imu_name}_link"/>
+
+    <!-- gazebo element -->
+    <!-- imu link in gazebo -->
+    <gazebo reference="${imu_name}_link">
+      <sensor type="imu" name="${imu_name}">
+        <always_on>true</always_on>
+        <visualize>false</visualize>
+      </sensor>
+      <material>Gazebo/FlatBlack</material>
+    </gazebo>
+
+
+    <gazebo>
+      <plugin name="${imu_name}_plugin" filename="libgazebo_ros_imu.so">
+        <alwaysOn>true</alwaysOn>
+        <bodyName>${imu_name}_link</bodyName>
+        <frameName>${imu_name}_link</frameName>
+        <topicName>${imu_topic_name}</topicName>
+        <serviceName>${imu_service_name}</serviceName>
+        <gaussianNoise>0.0</gaussianNoise>
+        <updateRate>60</updateRate>
+        <imu>
+          <noise>
+            <type>gaussian</type>
+            <rate>
+              <mean>0.0</mean>
+              <stddev>2e-4</stddev>
+              <bias_mean>0.0000075</bias_mean>
+              <bias_stddev>0.0000008</bias_stddev>
+            </rate>
+            <accel>
+              <mean>0.0</mean>
+              <stddev>1.7e-2</stddev>
+              <bias_mean>0.1</bias_mean>
+              <bias_stddev>0.001</bias_stddev>
+            </accel>
+          </noise>
+        </imu>
+      </plugin>
+    </gazebo>
+
+  </xacro:macro>
+</robot>

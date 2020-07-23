@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="TergeoRobot" name="tergeo">
+  <!-- args -->
+  <xacro:property name="caster_height" value=" 0.1" />
+  <xacro:property name="caster_length" value="0.03" />
+  <xacro:property name="caster_width" value="0.03" />
+
+  <!-- TODO: need external args -->
+  <xacro:macro name="caster_model" params="caster_name parent_link caster_xyz caster_rpy">
+
+    <joint name="${caster_name}_joint" type="fixed">
+      <parent link="${parent_link}"/>
+      <child link="${caster_name}_link"/>
+      <origin xyz="${caster_xyz}" rpy="${caster_rpy}"/>
+    </joint>
+
+    <!-- caseter link -->
+    <link name="${caster_name}_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="${caster_length} ${caster_width} ${caster_height}"/>
+        </geometry>
+        <material name="white" />
+      </visual>
+      
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="${caster_length} ${caster_width} ${caster_height}"/>
+        </geometry>
+      </collision>
+
+      <inertial>
+        <origin xyz="0 0 0" />
+        <mass value="1" />
+        <inertia ixx="0.000" ixy="0.0" ixz="0.0"
+                 iyy="0.000" iyz="0.0"
+                 izz="0.000" />
+      </inertial>
+    </link>
+
+    <!-- gazebo element -->
+    <gazebo reference="${caster_name}_link">
+      <mu1>0.000</mu1>
+      <mu2>0.000</mu2>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <minDepth>0.001</minDepth>
+      <maxVel>1.0</maxVel>
+      <material>Gazebo/FlatBlack</material>
+    </gazebo>
+
+  </xacro:macro>
+
+</robot>
