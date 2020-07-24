@@ -1,7 +1,7 @@
 <launch>
   <!-- args -->
   <arg name="model" default="$(find robot_description)/urdf/t_robot.urdf.xacro"/>
-  <arg name="rvizconfig" default="$(find robot_description)/rviz/robot_in_rviz.rviz"/>
+  <arg name="rvizconfig" default="$(find robot_description)/rviz/tergeo.rviz"/>
   <!-- param -->
   <param name="robot_description" command="$(find xacro)/xacro $(arg model)"/>
   <!-- two publisher node -->

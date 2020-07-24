@@ -6,6 +6,8 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
+        - /RobotModel1
+        - /TF1
       Splitter Ratio: 0.5
     Tree Height: 579
   - Class: rviz/Selection
@@ -66,36 +68,22 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        caster_back_link:
+        body_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        caster_front_link:
+        left_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        imu_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        robot_body_link:
+        right_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        robot_laser_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        wheel_left_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        wheel_right_link:
+        top_lidar16_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -113,21 +101,13 @@ Visualization Manager:
         All Enabled: true
         base_world:
           Value: true
-        caster_back_link:
+        body_link:
           Value: true
-        caster_front_link:
+        left_wheel_link:
           Value: true
-        imu_link:
+        right_wheel_link:
           Value: true
-        odom:
-          Value: true
-        robot_body_link:
-          Value: true
-        robot_laser_link:
-          Value: true
-        wheel_left_link:
-          Value: true
-        wheel_right_link:
+        top_lidar16_link:
           Value: true
       Marker Scale: 0.5
       Name: TF
@@ -135,21 +115,14 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        odom:
-          base_world:
-            robot_body_link:
-              caster_back_link:
-                {}
-              caster_front_link:
-                {}
-              imu_link:
-                {}
-              robot_laser_link:
-                {}
-              wheel_left_link:
-                {}
-              wheel_right_link:
-                {}
+        base_world:
+          body_link:
+            left_wheel_link:
+              {}
+            right_wheel_link:
+              {}
+            top_lidar16_link:
+              {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -177,45 +150,11 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.009999999776482582
       Style: Flat Squares
-      Topic: /pointcloud222
+      Topic: /sensor/lidar16/top/pointcloud
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
-    - Angle Tolerance: 0.10000000149011612
-      Class: rviz/Odometry
-      Covariance:
-        Orientation:
-          Alpha: 0.5
-          Color: 255; 255; 127
-          Color Style: Unique
-          Frame: Local
-          Offset: 1
-          Scale: 1
-          Value: true
-        Position:
-          Alpha: 0.30000001192092896
-          Color: 204; 51; 204
-          Scale: 1
-          Value: true
-        Value: true
-      Enabled: false
-      Keep: 100
-      Name: Odometry
-      Position Tolerance: 0.10000000149011612
-      Shape:
-        Alpha: 1
-        Axes Length: 1
-        Axes Radius: 0.10000000149011612
-        Color: 255; 25; 0
-        Head Length: 0.30000001192092896
-        Head Radius: 0.10000000149011612
-        Shaft Length: 1
-        Shaft Radius: 0.05000000074505806
-        Value: Arrow
-      Topic: /odom
-      Unreliable: false
-      Value: false
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -244,25 +183,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 6.530827522277832
+      Distance: 4.486889839172363
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 1.067642331123352
-        Y: -0.6295408606529236
-        Z: -0.7437383532524109
+        X: -0.09253930300474167
+        Y: 0.19106072187423706
+        Z: -0.015899498015642166
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.43539732694625854
+      Pitch: 0.6953970193862915
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 1.5835814476013184
+      Yaw: 0.5135819911956787
     Saved: ~
 Window Geometry:
   Displays:

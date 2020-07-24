@@ -2,17 +2,13 @@
 <robot xmlns:xacro="TergeoRobot" name="tergeo">
   <!-- base cfg and lidar cfg -->
   <xacro:include filename="$(find robot_description)/urdf/parts_cfg/lidar_cfg.xacro" ns="lidar" />
-  <xacro:include filename="$(find robot_description)/urdf/parts_cfg/base_world_cfg.xacro" ns="base" />
-  <!-- local args which need args from base cfg and lidar cfg -->
-  <!-- This arg will be deprecated soon -->
-  <xacro:property name="lidar_xyz" value="0 0 ${lidar.above_height+base.height/2+lidar.height/2}" />
 
   <!-- Macro to generate lidar model -->
   <xacro:macro name="lidar_model" params="lidar_name parent_link">
     <joint name="${lidar_name}_joint" type="fixed">
       <parent link="${parent_link}" />
       <child link="${lidar_name}_link" />
-      <origin xyz="${lidar_xyz}" rpy="${lidar.rpy}" />
+      <origin xyz="${lidar.xyz}" rpy="${lidar.rpy}" />
       <axis xyz="${lidar.axis}" />
     </joint>
 
