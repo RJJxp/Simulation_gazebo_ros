@@ -23,7 +23,7 @@
   <!-- Wheel and caster(cylinder) -->
   <!-- Assign the attribute for thickness and radius -->
   <xacro:property name="wheel_thickness" value="0.02"/> 
-  <xacro:property name="wheel_radius" value="0.1"/> 
+  <xacro:property name="wheel_radius" value="0.05"/> 
   <xacro:property name="caster_thickness" value="0.01"/>
   <xacro:property name="caster_radius" value="0.01"/> 
   <!-- Distance between wheels and robot body side -->

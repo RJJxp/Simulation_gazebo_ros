@@ -29,7 +29,7 @@ include_directories(
 #############
 ## Install ##
 #############
-install(DIRECTORY urdf rviz
+install(DIRECTORY urdf rviz world
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
