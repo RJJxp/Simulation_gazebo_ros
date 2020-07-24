@@ -5,14 +5,14 @@
   <xacro:property name="lidar_height" value="0.02" />
   <xacro:property name="lidar_radius" value="0.02" />
   <xacro:property name="h_sample" value="1800" />
-  <xacro:property name="h_min_angle" value="${-180*3.1415/180.0}" />
-  <xacro:property name="h_max_angle" value="${+180*3.1415/180.0}" />
+  <xacro:property name="h_min_angle" value="${-180*3.1415926535897931/180.0}" />
+  <xacro:property name="h_max_angle" value="${+180*3.1415926535897931/180.0}" />
   <xacro:property name="v_sample" value="16" />
-  <xacro:property name="v_min_angle" value="${-15.0*3.1415/180.0}" />
-  <xacro:property name="v_max_angle" value="${15*3.1415/180.0}" />
+  <xacro:property name="v_min_angle" value="${-15.0*3.1415926535897931/180.0}" />
+  <xacro:property name="v_max_angle" value="${15.0*3.1415926535897931/180.0}" />
   <xacro:property name="pub_topic_name" value="/sensor/lidar16/top/pointcloud" />
   <xacro:property name="min_range" value="0.2" />
-  <xacro:property name="max_range" value="10.0" />
+  <xacro:property name="max_range" value="100.0" />
   <xacro:property name="min_intensity" value="0.001" />
   <xacro:property name="gaussian_noise" value="0.02" />
 

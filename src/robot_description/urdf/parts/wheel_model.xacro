@@ -2,7 +2,7 @@
 <robot xmlns:xacro="TergeoRobot" name="tergeo">
   <!-- args -->
   <xacro:property name="wheel_thickness" value=" 0.02" />
-  <xacro:property name="wheel_radius" value="0.05" />
+  <xacro:property name="wheel_radius" value="0.10" />
 
   <!-- Definition of the wheel macro -->
   <xacro:macro name="wheel_model" params="wheel_name parent_link wheel_xyz wheel_rpy wheel_axis">

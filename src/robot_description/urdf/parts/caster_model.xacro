@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="TergeoRobot" name="tergeo">
   <!-- args -->
-  <xacro:property name="caster_height" value=" 0.05" />
+  <xacro:property name="caster_height" value=" 0.10" />
   <xacro:property name="caster_length" value="0.03" />
   <xacro:property name="caster_width" value="0.03" />
 
