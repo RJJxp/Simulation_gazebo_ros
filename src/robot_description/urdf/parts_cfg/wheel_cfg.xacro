@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<robot name="tergeo" xmlns:xacro="TergeoRobot">
+  <xacro:property name="left_xyz" value="" />
+  <xacro:property name="left_rpy" value="" />
+  <xacro:property name="right_xyz" value="" />
+  <xacro:property name="right_rpy" value="" />
+  
+  <xacro:property name="axis" value="0 0 1" />
+  <xacro:property name="mass" value="1.00" />
+  <xacro:property name="thickness" value="0.02" /> 
+  <xacro:property name="radius" value="0.10" />
+  <xacro:property name="ixx_iyy" value="${mass*(3*radius*radius+thickness*thickness)/12}" />
+  <xacro:property name="izz" value="${mass*radius*radius/2}" />
+
+  
+</robot>
