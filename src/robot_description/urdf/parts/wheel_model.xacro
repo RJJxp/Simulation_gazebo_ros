@@ -1,17 +1,27 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="TergeoRobot" name="tergeo">
-  <!-- args -->
-  <xacro:property name="wheel_thickness" value=" 0.02" />
-  <xacro:property name="wheel_radius" value="0.05" />
-
+  
+  <!-- include corresponding config file -->
+  <xacro:include filename="$(find robot_description)/urdf/parts_cfg/base_world_cfg.xacro" ns="base" />
+  <xacro:include filename="$(find robot_description)/urdf/parts_cfg/wheel_cfg.xacro" ns="wheel" />
+  
   <!-- Definition of the wheel macro -->
-  <xacro:macro name="wheel_model" params="wheel_name parent_link wheel_xyz wheel_rpy wheel_axis">
+  <xacro:macro name="wheel_model" params="wheel_name parent_link">
+
+    <!-- args depend on macro params and cfg file -->
+    <xacro:if value="${'left' in wheel_name}">
+      <xacro:property name="wheel_xyz" value="0 ${+(base.width/2+wheel.thickness/2+wheel.y_dis)} ${-base.height/2+wheel.z_dis}" />
+    </xacro:if>
+    <xacro:if value="${'right' in wheel_name}">
+      <xacro:property name="wheel_xyz" value="0 ${-(base.width/2+wheel.thickness/2+wheel.y_dis)} ${-base.height/2+wheel.z_dis}" />
+    </xacro:if>
     <!-- wheel joint -->
+  
     <joint name="${wheel_name}_joint" type="continuous">
       <parent link="${parent_link}" />
       <child link="${wheel_name}_link" />
-      <origin xyz="${wheel_xyz}" rpy="${wheel_rpy}" />
-      <axis xyz="${wheel_axis}" />
+      <origin xyz="${wheel_xyz}" rpy="${wheel.rpy}" />
+      <axis xyz="${wheel.axis}" />
     </joint>
 
     <!-- wheel link -->
@@ -19,7 +29,7 @@
       <visual>
         <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
         <geometry>
-          <cylinder length="${wheel_thickness}" radius="${wheel_radius}" />
+          <cylinder length="${wheel.thickness}" radius="${wheel.radius}" />
         </geometry>
         <material name="green" />
       </visual>
@@ -27,25 +37,18 @@
       <collision>
         <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
         <geometry>
-          <cylinder length="${wheel_thickness}" radius="${wheel_radius}" />
+          <cylinder length="${wheel.thickness}" radius="${wheel.radius}" />
         </geometry>
       </collision>
 
       <inertial>
         <origin xyz="0 0 0" />
-        <mass value="1" />
-        <inertia ixx="0.0025" ixy="0" ixz="0"
-                iyy="0.0025" iyz="0"
-                izz="0.005" />
+        <mass value="${wheel.mass}" />
+        <inertia ixx="${wheel.ixxiyy}" ixy="0" ixz="0"
+                 iyy="${wheel.ixxiyy}" iyz="0"
+                 izz="${wheel.izz}" />
       </inertial>
     
-      <!-- <inertial>
-        <origin xyz="0 0 0" />
-        <mass value="2" />
-        <inertia ixx="${0.025/2}" ixy="0" ixz="0"
-                iyy="${0.025/2}" iyz="0"
-                izz="${0.05/2}" />
-      </inertial> -->
     </link>
 
     <!-- setup the motor -->
@@ -62,13 +65,13 @@
 
     <!-- gazebo element -->
     <gazebo reference="${wheel_name}_link">
-      <mu1>0.1</mu1>
-      <mu2>0.1</mu2>
-      <kp>500000.0</kp>
-      <kd>10.0</kd>
-      <minDepth>0.001</minDepth>
-      <maxVel>1.0</maxVel>
-      <fdir1>1 0 0</fdir1>
+      <mu1>${wheel.mu1}</mu1>
+      <mu2>${wheel.mu2}</mu2>
+      <kp>${wheel.kp}</kp>
+      <kd>${wheel.kd}</kd>
+      <minDepth>${wheel.min_depth}</minDepth>
+      <maxVel>${wheel.max_vel}</maxVel>
+      <fdir1>${wheel.fdir1}</fdir1>
       <material>Gazebo/Green</material>
     </gazebo>
 
@@ -78,24 +81,23 @@
   <xacro:macro name="wheel_control" params="left_wheel_name right_wheel_name" >
     <gazebo>
       <plugin name="robot_controller" filename="libgazebo_ros_diff_drive.so">
-        <commandTopic>cmd_vel</commandTopic>
-        <odometryTopic>odom</odometryTopic>
-        <odometryFrame>odom</odometryFrame>
-        <odometrySource>world</odometrySource>
+        <commandTopic>${wheel.sub_cmd_topic}</commandTopic>
+        <odometryTopic>${wheel.pub_odom_topic}</odometryTopic>
+        <odometryFrame>${wheel.odom_frame}</odometryFrame>
+        <odometrySource>${wheel.odom_src}</odometrySource>
         <publishOdomTF>true</publishOdomTF>
         <robotBaseFrame>base_world</robotBaseFrame>
         <publishWheelTF>false</publishWheelTF>
         <publishTf>true</publishTf>
         <publishWheelJointState>true</publishWheelJointState>
         <legacyMode>false</legacyMode>
-        <updateRate>30</updateRate>
+        <updateRate>${wheel.update_rate}</updateRate>
         <leftJoint>${left_wheel_name}_joint</leftJoint>
         <rightJoint>${right_wheel_name}_joint</rightJoint>
-        <!-- wheel seperation need to know the body width -->
-        <wheelSeparation>0.46</wheelSeparation>
-        <wheelDiameter>${2*wheel_radius}</wheelDiameter>
-        <wheelAcceleration>100</wheelAcceleration>
-        <wheelTorque>5</wheelTorque>
+        <wheelSeparation>${base.width+2*wheel.thickness/2+2*wheel.y_dis}</wheelSeparation>
+        <wheelDiameter>${2*wheel.radius}</wheelDiameter>
+        <wheelAcceleration>${wheel.accel}</wheelAcceleration>
+        <wheelTorque>${wheel.torque}</wheelTorque>
         <rosDebugLevel>na</rosDebugLevel>
       </plugin>
     </gazebo>
