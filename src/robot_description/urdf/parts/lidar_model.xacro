@@ -56,7 +56,7 @@
       <material>Gazebo/Red</material>
       <sensor type="ray" name="laser_16">
         <pose>0 0 0 0 0 0</pose>
-        <visualize>false</visualize>
+        <visualize>true</visualize>
         <update_rate>10</update_rate>
         <ray>
           <scan>
