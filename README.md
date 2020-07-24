@@ -108,15 +108,14 @@ Tutorial for all. [Click here](http://wiki.ros.org/xacro#Math_expressions)
 
 
 
-## 04. Auto Generate Model
+## 04. Use config
 
-Write a cpp library to read the config of robot including sensor extrinsic, intrinsic
+config --> part.xacro -->whole.xacro
 
 
 
-## 05. Adapt the Simulation 
+## 05. Refine the model
 
-Adapt the simulation to the [Tonglu](http://www.tonglurobot.com/) Intelligent Driving system named `Tergeo` .
+Hard to control right now
 
-This part will not be include in this repository.
-
+Need to learn how to modify the physics param.
