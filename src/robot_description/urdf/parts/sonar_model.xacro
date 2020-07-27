@@ -1,7 +1,19 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="TergeoRobot" name="tergeo">
 
-<xacro:macro name="sonar_model" params="sonar_name parent_link sonar_xyz sonar_rpy">
+<xacro:include filename="$(find robot_description)/urdf/parts_cfg/sonar_cfg.xacro" ns="sonar" />
+
+<xacro:macro name="sonar_model" params="sonar_name parent_link">
+
+  <xacro:if value="${'left' in sonar_name}">
+      <xacro:property name="sonar_xyz" value="${sonar.left_xyz}" />
+      <xacro:property name="sonar_rpy" value="${sonar.left_rpy}" />
+  </xacro:if>
+  <xacro:if value="${'right' in sonar_name}">
+      <xacro:property name="sonar_xyz" value="${sonar.right_xyz}" />
+      <xacro:property name="sonar_rpy" value="${sonar.right_rpy}" />
+  </xacro:if>
+
   <!-- sonar joint -->
   <joint name="${sonar_name}_joint" type="fixed">
     <parent link="${parent_link}" />
@@ -40,38 +52,36 @@
     <material>Gazebo/ZincYellow</material>
     <sensor type="ray" name="${sonar_name}">
       <pose>0 0 0 0 0 0</pose>
-      <visualize>true</visualize>
-      <update_rate>5</update_rate>
+      <visualize>${sonar.visualize}</visualize>
+      <update_rate>${sonar.update_rate}</update_rate>
       <ray>
         <scan>
           <horizontal>
-            <samples>5</samples>
+            <samples>${sonar.h_sample}</samples>
             <resolution>1.0</resolution>
-            <min_angle>-0.25</min_angle>
-            <max_angle>0.25</max_angle>
+            <min_angle>${sonar.h_min_angle}</min_angle>
+            <max_angle>${sonar.h_max_angle}</max_angle>
           </horizontal>
           <vertical>
-            <samples>5</samples>
+            <samples>${sonar.v_sample}</samples>
             <resolution>1</resolution>
-            <min_angle>-0.25</min_angle>
-            <max_angle>0.25</max_angle>
+            <min_angle>${sonar.v_min_angle}</min_angle>
+            <max_angle>${sonar.v_max_angle}</max_angle>
           </vertical>
         </scan>
         <range>
-          <min>0.03</min>
-          <max>0.2</max>
-          <resolution>0.01</resolution>
+          <min>${sonar.min_range}</min>
+          <max>${sonar.max_range}</max>
+          <resolution>${sonar.range_res}</resolution>
         </range>
       </ray>
       <plugin name="${sonar_name}_plugin" filename="libgazebo_ros_range.so">
-        <gaussianNoise>0.005</gaussianNoise>
+        <gaussianNoise>${sonar.g_noise}</gaussianNoise>
         <alwaysOn>true</alwaysOn>
-        <updateRate>5</updateRate>  
+        <updateRate>${sonar.update_rate}</updateRate>  
         <topicName>${sonar_name}</topicName>
         <frameName>${sonar_name}_link</frameName>
-        <!-- field of view = (max_angle - min_angle) -->
-        <!--               = 2 max_angle -->
-        <fov>0.5</fov>
+        <fov>${sonar.fov}</fov>
         <radiation>ultrasound</radiation>
       </plugin>
     </sensor>

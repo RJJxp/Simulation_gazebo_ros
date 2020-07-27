@@ -32,16 +32,12 @@
   <xacro:caster_model caster_name="back_caster" parent_link="body_link" />
 
   <!-- This macro generates left sonar -->
-  <!-- <xacro:sonar_model sonar_name="left_sonar" parent_link="body_link" sonar_xyz="0 ${width/2+0.01} 0" sonar_rpy="0 0 ${PI/2}" /> -->
+  <!-- <xacro:sonar_model sonar_name="left_sonar" parent_link="body_link" /> -->
 
   <!-- This macro generates right sonar -->
-  <!-- <xacro:sonar_model sonar_name="right_sonar" parent_link="body_link" sonar_xyz="0 ${-width/2-0.01} 0" sonar_rpy="0 0 ${-PI/2}" /> -->
+  <!-- <xacro:sonar_model sonar_name="right_sonar" parent_link="body_link" /> -->
 
   <!-- This macro generates imu -->
-  <!-- <xacro:imu_model imu_name="imu" parent_link="body_link" imu_xyz="0 0 0" imu_rpy="0 0 0" /> -->
-
-  
-
-
+  <xacro:imu_model imu_name="imu" parent_link="body_link" />
 
 </robot>
