@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="tergeo" xmlns:xacro="TergeoRobot">
+<robot name="tergeo" xmlns:xacro="http://ros.org/wiki/xacro">
 
   <!-- Import the cfg -->
   <xacro:include filename="$(find robot_description)/urdf/parts_cfg/base_world_cfg.xacro" ns="base" />

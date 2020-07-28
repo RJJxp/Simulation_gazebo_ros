@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!-- Tergeo Washing Floor Robot -->
-<robot name="tergeo" xmlns:xacro="TergeoRobot">
+<robot name="tergeo" xmlns:xacro="http://ros.org/wiki/xacro">
   <!-- Import all designed robot model args  -->
   <!-- <xacro:include filename="$(find robot_description)/urdf/t_robot_args.xacro"/> -->
   
