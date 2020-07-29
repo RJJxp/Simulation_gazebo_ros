@@ -4,7 +4,7 @@
   <xacro:arg name="imu_visual"   default="false"/>
 
   <gazebo reference="base_link">
-    <material>Gazebo/DarkGrey</material>
+    <material>Gazebo/Orange</material>
   </gazebo>
 
   <gazebo reference="wheel_left_link">
@@ -15,7 +15,7 @@
     <minDepth>0.001</minDepth>
     <maxVel>0.1</maxVel>
     <fdir1>1 0 0</fdir1>
-    <material>Gazebo/FlatBlack</material>
+    <material>Gazebo/DarkYellow</material>
   </gazebo>
 
   <gazebo reference="wheel_right_link">
@@ -26,7 +26,7 @@
     <minDepth>0.001</minDepth>
     <maxVel>0.1</maxVel>
     <fdir1>1 0 0</fdir1>
-    <material>Gazebo/FlatBlack</material>
+    <material>Gazebo/DarkYellow</material>
   </gazebo>
 
   <gazebo reference="caster_back_link">
@@ -132,8 +132,8 @@
           </noise>
         </ray>
         <plugin name="gazebo_ros_laser_controller" filename="libgazebo_ros_velodyne_laser.so">
-          <topicName>mypt2</topicName>
-          <frameName>base_scan_link</frameName>
+          <topicName>/mypt2</topicName>
+          <frameName>base_scan</frameName>
           <min_range>0.2</min_range>
           <max_range>5</max_range>
           <!-- TODO: Not sure need this arg or not? -->
