@@ -131,7 +131,7 @@
             <stddev>0.0</stddev>
           </noise>
         </ray>
-        <plugin name="gazebo_ros_laser_controller" filename="libgazebo_ros_velodyne_laser.so">
+        <plugin name="lidar_sensor" filename="libgazebo_ros_velodyne_laser.so">
           <topicName>/mypt2</topicName>
           <frameName>base_scan</frameName>
           <min_range>0.2</min_range>
