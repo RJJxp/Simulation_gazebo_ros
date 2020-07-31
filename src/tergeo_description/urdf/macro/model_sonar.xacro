@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <robot name="tergeo" xmlns:xacro="http://ros.org/wiki/xacro">
 
-<xacro:include filename="$(find tb_modify_description)/urdf/macro/cfg_sonar.xacro" ns="sonar" />
+<xacro:include filename="$(find tergeo_description)/urdf/macro/cfg/cfg_sonar.xacro" ns="sonar" />
 
 <xacro:macro name="sonar_model" params="sonar_name parent_link">
 
   <xacro:if value="${'left' in sonar_name}">
-      <xacro:property name="sonar_xyz" value="${sonar.left_xyz}" />
-      <xacro:property name="sonar_rpy" value="${sonar.left_rpy}" />
+    <xacro:property name="sonar_xyz" value="${sonar.left_xyz}" />
+    <xacro:property name="sonar_rpy" value="${sonar.left_rpy}" />
   </xacro:if>
   <xacro:if value="${'right' in sonar_name}">
-      <xacro:property name="sonar_xyz" value="${sonar.right_xyz}" />
-      <xacro:property name="sonar_rpy" value="${sonar.right_rpy}" />
+    <xacro:property name="sonar_xyz" value="${sonar.right_xyz}" />
+    <xacro:property name="sonar_rpy" value="${sonar.right_rpy}" />
   </xacro:if>
 
   <!-- sonar joint -->
@@ -39,7 +39,7 @@
 
     <inertial>
       <origin xyz="0 0 0" />
-      <mass value="0.001" />
+      <mass value="0.000001" />
       <inertia ixx="0.000" ixy="0.0" ixz="0.0"
                iyy="0.000" iyz="0.0"
                izz="0.000" />

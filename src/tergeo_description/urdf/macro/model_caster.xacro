@@ -1,0 +1,46 @@
+<?xml version="1.0" ?>
+<robot name="tergeo" xmlns:xacro="http://ros.org/wiki/xacro">
+  
+  <!-- Macro to generate caster model -->
+  <!-- Input base_name and world_link -->
+  <!-- EXAMPLE
+    <xacro:basemodel base_name="base" world_link="world" />
+    It will generate a `base_link` and `world`
+  -->
+
+  <xacro:macro name="caster_model" params="caster_name parent_link">
+    <joint name="${caster_name}_joint" type="fixed">
+      <parent link="${parent_link}"/>
+      <child link="${caster_name}_link"/>
+      <origin xyz="-0.081 0 -0.004" rpy="-1.57 0 0"/>
+    </joint>
+
+    <link name="${caster_name}_link">
+      <collision>
+        <origin xyz="0 0.001 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.030 0.009 0.020"/>
+        </geometry>
+      </collision>
+
+      <inertial>
+        <origin xyz="0 0 0" />
+        <mass value="0.005" />
+        <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                iyy="0.001" iyz="0.0"
+                izz="0.001" />
+      </inertial>
+    </link>
+    
+    <gazebo reference="${caster_name}_link">
+      <mu1>0.1</mu1>
+      <mu2>0.1</mu2>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
+      <minDepth>0.001</minDepth>
+      <maxVel>1.0</maxVel>
+      <material>Gazebo/FlatBlack</material>
+    </gazebo>
+
+  </xacro:macro>
+</robot>

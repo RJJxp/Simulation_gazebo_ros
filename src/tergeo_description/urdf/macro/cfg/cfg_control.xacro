@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<robot name="tergeo" xmlns:xacro="http://ros.org/wiki/xacro">
+  
+  <!-- Control args -->
+  <xacro:property name="sub_cmd_topic" value="cmd_vel" />
+  <xacro:property name="pub_odom_topic" value="odom" />
+  <xacro:property name="odom_frame" value="odom" />
+  <xacro:property name="update_rate" value="30" />
+  <xacro:property name="accel" value="1" />
+  <xacro:property name="torque" value="10" />
+  <!-- param `odometry source` only has 2 optional value -->
+  <!-- `world` and `encoder`  -->
+  <!-- `world` publish the odom from gazebo world -->
+  <!-- `encoder` publish the odom from encoder integration -->
+  <!-- I prefer `encoder` -->
+  <xacro:property name="odom_source" value="world" />
+
+</robot>

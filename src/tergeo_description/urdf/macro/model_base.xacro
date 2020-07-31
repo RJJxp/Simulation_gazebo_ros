@@ -5,18 +5,18 @@
   <xacro:include filename="$(find tergeo_description)/urdf/macro/cfg/cfg_base.xacro" ns="base" />
   
   <!-- Macro to generate base model -->
-  <!-- Input base_name and parent_link -->
+  <!-- Input base_name and world_link -->
   <!-- EXAMPLE
-    <xacro:basemodel base_name="base" parent_link="world" />
+    <xacro:basemodel base_name="base" world_link="world" />
     It will generate a `base_link` and `world`
   -->
 
-  <xacro:macro name="base_model" params="base_name parent_link">
+  <xacro:macro name="base_model" params="base_name world_link">
     
-    <link name="${parent_link}"/>
+    <link name="${world_link}"/>
 
     <joint name="${base_name}_joint" type="fixed">
-      <parent link="${parent_link}"/>
+      <parent link="${world_link}"/>
       <child link="${base_name}_link"/>
       <origin xyz="0.0 0.0 0.010" rpy="0 0 0"/>
     </joint>

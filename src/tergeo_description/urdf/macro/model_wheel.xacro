@@ -1,9 +1,96 @@
 <?xml version="1.0" ?>
 <robot name="tergeo" xmlns:xacro="http://ros.org/wiki/xacro">
   <!-- Import  -->
-  <xacro:include filename="$(find tergeo_description)/urdf/macro/cfg/cfg_lidar.xacro" ns="lidar" />
-  <!-- Macro to generate lidar -->
-
+  <xacro:include filename="$(find tergeo_description)/urdf/macro/cfg/cfg_control.xacro" ns="control" />
   
+  <!-- Macro to generate wheel -->
+  <xacro:macro name="wheel_model" params="wheel_name parent_link">
+
+    <xacro:if value="${'left' in wheel_name}">
+      <xacro:property name="wheel_xyz" value="0 0.08 0.023" />
+    </xacro:if>
+    <xacro:if value="${'right' in wheel_name}">
+      <xacro:property name="wheel_xyz" value="0 -0.08 0.023" />
+    </xacro:if>
+
+    <joint name="${wheel_name}_joint" type="continuous">
+      <parent link="${parent_link}"/>
+      <child link="${wheel_name}_link"/>
+      <origin xyz="${wheel_xyz}" rpy="-1.57 0 0"/>
+      <axis xyz="0 0 1"/>
+    </joint>
+
+    <link name="${wheel_name}_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="1.57 0 0"/>
+        <geometry>
+          <mesh filename="package://tergeo_description/meshes/wheels/left_tire.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="dark"/>
+      </visual>
+
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder length="0.018" radius="0.033"/>
+        </geometry>
+      </collision>
+
+      <inertial>
+        <origin xyz="0 0 0" />
+        <mass value="2.8498940e-02" />
+        <inertia ixx="1.1175580e-05" ixy="-4.2369783e-11" ixz="-5.9381719e-09"
+                iyy="1.1192413e-05" iyz="-1.4400107e-11"
+                izz="2.0712558e-05" />
+      </inertial>
+    </link>
+
+    <!-- gazebo element -->
+    <gazebo reference="${wheel_name}_link">
+      <mu1>0.1</mu1>
+      <mu2>0.1</mu2>
+      <kp>500000.0</kp>
+      <kd>10.0</kd>
+      <minDepth>0.001</minDepth>
+      <maxVel>0.1</maxVel>
+      <fdir1>1 0 0</fdir1>
+      <material>Gazebo/Green</material>
+    </gazebo>
+
+  </xacro:macro>
+  
+  <!-- Macro to control the motion of the robot -->
+  <!-- 
+    01. `left_wheel_name` and `right_wheel_name` 
+    should be same with the param `wheel_name` of the macro `wheel_model`
+    02 .`world_link` 
+    should be same with the param `world_link` of the macro `base_model` 
+  -->
+  <xacro:macro name="control_model" params="left_wheel_name right_wheel_name world_link">
+
+    <gazebo>
+      <plugin name="tergeo_controller" filename="libgazebo_ros_diff_drive.so">
+        <commandTopic>${control.sub_cmd_topic}</commandTopic>
+        <odometryTopic>${control.pub_odom_topic}</odometryTopic>
+        <odometryFrame>${control.odom_frame}</odometryFrame>
+        <odometrySource>${control.odom_source}</odometrySource>
+        <publishOdomTF>true</publishOdomTF>
+        <robotBaseFrame>${world_link}</robotBaseFrame>
+        <publishWheelTF>false</publishWheelTF>
+        <publishTf>true</publishTf>
+        <publishWheelJointState>true</publishWheelJointState>
+        <legacyMode>false</legacyMode>
+        <updateRate>${control.update_rate}</updateRate>
+        <leftJoint>${left_wheel_name}_joint</leftJoint>
+        <rightJoint>${right_wheel_name}_joint</rightJoint>
+        <wheelSeparation>0.160</wheelSeparation>
+        <wheelDiameter>0.066</wheelDiameter>
+        <wheelAcceleration>${control.accel}</wheelAcceleration>
+        <wheelTorque>${control.torque}</wheelTorque>
+        <rosDebugLevel>na</rosDebugLevel>
+      </plugin>
+    </gazebo>
+
+  </xacro:macro>
 
 </robot>

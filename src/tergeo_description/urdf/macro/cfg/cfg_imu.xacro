@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<robot name="tergeo" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:property name="topic_name" value="imu" />
+  <xacro:property name="service_name" value="imu_service" />
+  <xacro:property name="update_rate" value="60" />
+
+</robot>

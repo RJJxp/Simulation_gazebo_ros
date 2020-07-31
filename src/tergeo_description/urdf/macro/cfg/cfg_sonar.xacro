@@ -1,16 +1,16 @@
 <?xml version="1.0" ?>
 <robot name="tergeo" xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <xacro:include filename="$(find tb_modify_description)/urdf/macro/cfg_base.xacro" ns="base" />
+  <xacro:include filename="$(find tergeo_description)/urdf/macro/cfg/cfg_base.xacro" ns="base" />
 
   <!-- Math -->
   <xacro:property name="PI" value="3.1415926535897931" />
   <!-- The all sonars' position -->
   <!-- Append the sonars you need -->
   <!-- Here is only 2 examples for simple car -->
-  <xacro:property name="left_xyz" value="0 ${+(base.width/2+0.01)} 0" />
+  <xacro:property name="left_xyz" value="0 ${+(base.width/2+0.01)} ${0.033+base.height/2}" />
   <xacro:property name="left_rpy" value="0 0 ${PI/2}" />
-  <xacro:property name="right_xyz" value="0 ${-(base.width/2+0.01)} 0" />
+  <xacro:property name="right_xyz" value="0 ${-(base.width/2+0.01)} ${0.033+base.height/2}" />
   <xacro:property name="right_rpy" value="0 0 ${-PI/2}" />
 
   <!-- sonar size is fixed to -->
