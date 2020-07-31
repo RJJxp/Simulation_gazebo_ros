@@ -2,17 +2,12 @@
 <robot name="tergeo" xmlns:xacro="http://ros.org/wiki/xacro">
   
   <!-- Macro to generate caster model -->
-  <!-- Input base_name and world_link -->
-  <!-- EXAMPLE
-    <xacro:basemodel base_name="base" world_link="world" />
-    It will generate a `base_link` and `world`
-  -->
-
+  <xacro:property name="PI" value="3.1415926535897931" />
   <xacro:macro name="caster_model" params="caster_name parent_link">
     <joint name="${caster_name}_joint" type="fixed">
       <parent link="${parent_link}"/>
       <child link="${caster_name}_link"/>
-      <origin xyz="-0.081 0 -0.004" rpy="-1.57 0 0"/>
+      <origin xyz="-0.081 0 -0.004" rpy="${-PI/2} 0 0"/>
     </joint>
 
     <link name="${caster_name}_link">

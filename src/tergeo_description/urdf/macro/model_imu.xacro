@@ -4,13 +4,7 @@
   <!-- Import imu params -->
   <xacro:include filename="$(find tergeo_description)/urdf/macro/cfg/cfg_imu.xacro" ns="imu" />
 
-  <!-- Macro to generate caster model -->
-  <!-- Input base_name and world_link -->
-  <!-- EXAMPLE
-    <xacro:basemodel base_name="base" world_link="world" />
-    It will generate a `base_link` and `world`
-  -->
-
+  <!-- Macro to generate imu model -->
   <xacro:macro name="imu_model" params="imu_name parent_link">
     
     <joint name="${imu_name}_joint" type="fixed">

@@ -4,6 +4,7 @@
   <xacro:include filename="$(find tergeo_description)/urdf/macro/cfg/cfg_control.xacro" ns="control" />
   
   <!-- Macro to generate wheel -->
+  <xacro:property name="PI" value="3.1415926535897931" />
   <xacro:macro name="wheel_model" params="wheel_name parent_link">
 
     <xacro:if value="${'left' in wheel_name}">
@@ -16,13 +17,13 @@
     <joint name="${wheel_name}_joint" type="continuous">
       <parent link="${parent_link}"/>
       <child link="${wheel_name}_link"/>
-      <origin xyz="${wheel_xyz}" rpy="-1.57 0 0"/>
+      <origin xyz="${wheel_xyz}" rpy="${-PI/2} 0 0"/>
       <axis xyz="0 0 1"/>
     </joint>
 
     <link name="${wheel_name}_link">
       <visual>
-        <origin xyz="0 0 0" rpy="1.57 0 0"/>
+        <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
         <geometry>
           <mesh filename="package://tergeo_description/meshes/wheels/left_tire.stl" scale="0.001 0.001 0.001"/>
         </geometry>

@@ -3,6 +3,7 @@
 
 <xacro:include filename="$(find tergeo_description)/urdf/macro/cfg/cfg_sonar.xacro" ns="sonar" />
 
+<!-- Macro to generate lidar -->
 <xacro:macro name="sonar_model" params="sonar_name parent_link">
 
   <xacro:if value="${'left' in sonar_name}">
