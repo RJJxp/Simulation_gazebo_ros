@@ -2,6 +2,16 @@
 
 Show how to run the code.
 
+---
+
+update 20200731
+
+- robot_description_deprecated/
+- robot_gz_deprecated/
+- tb_description_deprecated
+
+These 3 packages are deprecated. Keep them for reference.
+
 ## Dependency
 
 ROS and Gazebo
@@ -119,3 +129,9 @@ config --> part.xacro -->whole.xacro
 Hard to control right now
 
 Need to learn how to modify the physics param.
+
+---
+
+update 20200731
+
+Hard to find a precise way to control my own robot due to the mass center does not locate on the wheel axis. So we change the visual of turtlebot_burger to make the control easier. 
