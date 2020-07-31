@@ -1,0 +1,10 @@
+<launch>
+  <arg name="rvizconfig" default="$(find tergeo_description)/rviz/tergeo_2.rviz"/>
+
+  <arg name="urdf_file" default="$(find xacro)/xacro --inorder '$(find tergeo_description)/urdf/test.xacro'" />
+  <param name="robot_description" command="$(arg urdf_file)" />
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui"/>
+  <node name="robot_rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)"/>
+</launch>

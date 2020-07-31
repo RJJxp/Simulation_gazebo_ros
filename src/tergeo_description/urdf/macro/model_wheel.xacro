@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<robot name="tergeo" xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- Import  -->
+  <xacro:include filename="$(find tergeo_description)/urdf/macro/cfg/cfg_lidar.xacro" ns="lidar" />
+  <!-- Macro to generate lidar -->
+
+  
+
+</robot>

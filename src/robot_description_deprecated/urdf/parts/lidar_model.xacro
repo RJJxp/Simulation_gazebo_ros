@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="tergeo">
+  <!-- base cfg and lidar cfg -->
+  <xacro:include filename="$(find robot_description)/urdf/parts_cfg/lidar_cfg.xacro" ns="lidar" />
+
+  <!-- Macro to generate lidar model -->
+  <xacro:macro name="lidar_model" params="lidar_name parent_link">
+    <joint name="${lidar_name}_joint" type="fixed">
+      <parent link="${parent_link}" />
+      <child link="${lidar_name}_link" />
+      <origin xyz="${lidar.xyz}" rpy="${lidar.rpy}" />
+      <axis xyz="${lidar.axis}" />
+    </joint>
+
+    <link name="${lidar_name}_link">
+      <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+        <geometry>
+          <cylinder length="${lidar.height}" radius="${lidar.radius}" />
+        </geometry>
+        <material name="blue" />
+      </visual>
+
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+        <geometry>
+          <cylinder length="${lidar.height}" radius="${lidar.radius}" />
+        </geometry>
+      </collision>
+
+      <inertial>
+        <mass value="${lidar.mass}" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="0.0" ixy="0.0" ixz="0.0"
+                 iyy="0.0" iyz="0.0"
+                 izz="0.0" />
+      </inertial>
+    </link>
+
+    <!-- Gazebo plugin for lidar -->
+    <gazebo reference="${lidar_name}_link">
+      <material>Gazebo/Red</material>
+      <sensor type="ray" name="laser_16">
+        <pose>0 0 0 0 0 0</pose>
+        <visualize>${lidar.visualize}</visualize>
+        <update_rate>${lidar.update_rate}</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>${lidar.h_sample}</samples>
+              <resolution>1</resolution>
+              <min_angle>${lidar.h_min_angle}</min_angle>
+              <max_angle>${lidar.h_max_angle}</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>${lidar.v_sample}</samples>
+              <resolution>1</resolution>
+              <min_angle>${lidar.v_min_angle}</min_angle>
+              <max_angle>${lidar.v_max_angle}</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>${lidar.min_range}</min>
+            <max>${lidar.max_range}</max>
+            <resolution>${lidar.range_res}</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.0</stddev>
+          </noise>
+        </ray>
+        <plugin name="gazebo_ros_laser_controller" filename="libgazebo_ros_velodyne_laser.so">
+          <topicName>${lidar.pub_topic_name}</topicName>
+          <frameName>${lidar_name}_link</frameName>
+          <min_range>${lidar.min_range}</min_range>
+          <max_range>${lidar.max_range}</max_range>
+          <!-- TODO: Not sure need this arg or not? -->
+          <!-- <min_intensity>${min_intensity}</min_intensity> -->
+          <gaussianNoise>${lidar.gaussian_noise}</gaussianNoise>
+        </plugin>
+      </sensor>
+    </gazebo>
+  </xacro:macro>
+
+</robot>

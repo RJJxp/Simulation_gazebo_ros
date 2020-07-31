@@ -1,0 +1,244 @@
+<?xml version="1.0"?>
+
+<!-- Tergeo Washing Floor Robot for gazebo -->
+<robot name="tergeo_sim" xmlns:xacro="TergeoRobotSim">
+  <!-- xacro args -->
+  <xacro:arg name="laser_visual" default="true"/>
+
+  <!-- robot body color in gazebo gui -->
+  <gazebo reference="robot_body_link">
+    <material>Gazebo/Orange</material>
+  </gazebo>
+
+  <!-- imu link in gazebo -->
+  <gazebo reference="imu_link">
+    <sensor type="imu" name="imu">
+      <always_on>true</always_on>
+      <visualize>false</visualize>
+    </sensor>
+    <material>Gazebo/FlatBlack</material>
+  </gazebo>
+
+  <gazebo>
+    <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
+      <alwaysOn>true</alwaysOn>
+      <bodyName>imu_link</bodyName>
+      <frameName>imu_link</frameName>
+      <topicName>imu</topicName>
+      <serviceName>imu_service</serviceName>
+      <gaussianNoise>0.0</gaussianNoise>
+      <updateRate>60</updateRate>
+      <imu>
+        <noise>
+          <type>gaussian</type>
+          <rate>
+            <mean>0.0</mean>
+            <stddev>2e-4</stddev>
+            <bias_mean>0.0000075</bias_mean>
+            <bias_stddev>0.0000008</bias_stddev>
+          </rate>
+          <accel>
+            <mean>0.0</mean>
+            <stddev>1.7e-2</stddev>
+            <bias_mean>0.1</bias_mean>
+            <bias_stddev>0.001</bias_stddev>
+          </accel>
+        </noise>
+      </imu>
+    </plugin>
+  </gazebo>
+
+  <!-- robot laser setup in gazebo -->
+  <gazebo reference="robot_laser_link">
+    <material>Gazebo/Red</material>
+    <sensor type="ray" name="laser_16">
+        <pose>0 0 0 0 0 0</pose>
+        <visualize>true</visualize>
+        <update_rate>10</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>90</samples>
+              <resolution>1</resolution>
+              <min_angle>-1.0</min_angle>
+              <max_angle>+1.0</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>16</samples>
+              <resolution>1</resolution>
+              <min_angle>-${20.0*3.1415/180.0}</min_angle>
+              <max_angle>+${05.0*3.1415/180.0}</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>0.2</min>
+            <max>5</max>
+            <resolution>0.01</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.0</stddev>
+          </noise>
+        </ray>
+        <plugin name="gazebo_ros_laser_controller" filename="libgazebo_ros_velodyne_laser.so">
+          <topicName>/pointcloud222</topicName>
+          <frameName>robot_laser_link</frameName>
+          <min_range>0.2</min_range>
+          <max_range>5.0</max_range>
+          <gaussianNoise>0.008</gaussianNoise>
+        </plugin>
+      </sensor>
+  </gazebo>
+
+  <!-- 2 wheels -->
+  <gazebo reference="wheel_left_link">
+    <mu1>0.1</mu1>
+    <mu2>0.1</mu2>
+    <kp>500000.0</kp>
+    <kd>10.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>1.0</maxVel>
+    <fdir1>1 0 0</fdir1>
+    <material>Gazebo/Green</material>
+  </gazebo>
+
+  <gazebo reference="wheel_right_link">
+    <mu1>0.1</mu1>
+    <mu2>0.1</mu2>
+    <kp>500000.0</kp>
+    <kd>10.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>1.0</maxVel>
+    <fdir1>1 0 0</fdir1>
+    <material>Gazebo/Green</material>
+  </gazebo>
+
+  <!-- two caster wheels -->
+  <gazebo reference="caster_back_link">
+    <mu1>0.000</mu1>
+    <mu2>0.000</mu2>
+    <kp>1000000.0</kp>
+    <kd>100.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>1.0</maxVel>
+    <material>Gazebo/FlatBlack</material>
+  </gazebo>
+
+  <gazebo reference="caster_front_link">
+    <mu1>0.000</mu1>
+    <mu2>0.000</mu2>
+    <kp>1000000.0</kp>
+    <kd>100.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>1.0</maxVel>
+    <material>Gazebo/FlatBlack</material>
+  </gazebo>
+
+  <!-- control plugin diff drive -->
+  <gazebo>
+    <plugin name="robot_controller" filename="libgazebo_ros_diff_drive.so">
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <odometrySource>world</odometrySource>
+      <publishOdomTF>true</publishOdomTF>
+      <robotBaseFrame>base_world</robotBaseFrame>
+      <publishWheelTF>false</publishWheelTF>
+      <publishTf>true</publishTf>
+      <publishWheelJointState>true</publishWheelJointState>
+      <legacyMode>false</legacyMode>
+      <updateRate>30</updateRate>
+      <leftJoint>wheel_left_joint</leftJoint>
+      <rightJoint>wheel_right_joint</rightJoint>
+      <wheelSeparation>0.46</wheelSeparation>
+      <wheelDiameter>0.2</wheelDiameter>
+      <wheelAcceleration>100</wheelAcceleration>
+      <wheelTorque>10</wheelTorque>
+      <rosDebugLevel>na</rosDebugLevel>
+    </plugin>
+  </gazebo>
+
+  <!-- sonar plugin -->
+  <gazebo reference="sonar_01_link">
+    <material>Gazebo/ZincYellow</material>
+    <sensor type="ray" name="sonar_01_link">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>5</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>5</samples>
+            <resolution>1.0</resolution>
+            <min_angle>-0.25</min_angle>
+            <max_angle>0.25</max_angle>
+          </horizontal>
+          <vertical>
+            <samples>5</samples>
+            <resolution>1</resolution>
+            <min_angle>-0.25</min_angle>
+            <max_angle>0.25</max_angle>
+          </vertical>
+        </scan>
+        <range>
+          <min>0.03</min>
+          <max>0.2</max>
+          <resolution>0.01</resolution>
+        </range>
+      </ray>
+      <plugin name="sonar_01_plugin" filename="libgazebo_ros_range.so">
+        <gaussianNoise>0.005</gaussianNoise>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>5</updateRate>  
+        <topicName>sonar_01</topicName>
+        <frameName>sonar_01_link</frameName>
+        <!-- field of view = (max_angle - min_angle) -->
+        <!--               = 2 max_angle -->
+        <fov>0.5</fov>
+        <radiation>ultrasound</radiation>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <gazebo reference="sonar_02_link">
+    <material>Gazebo/ZincYellow</material>
+    <sensor type="ray" name="sonar_02_link">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>5</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>5</samples>
+            <resolution>1.0</resolution>
+            <min_angle>-0.25</min_angle>
+            <max_angle>0.25</max_angle>
+          </horizontal>
+          <vertical>
+            <samples>5</samples>
+            <resolution>1</resolution>
+            <min_angle>-0.25</min_angle>
+            <max_angle>0.25</max_angle>
+          </vertical>
+        </scan>
+        <range>
+          <min>0.03</min>
+          <max>0.2</max>
+          <resolution>0.01</resolution>
+        </range>
+      </ray>
+      <plugin name="sonar_02_plugin" filename="libgazebo_ros_range.so">
+        <gaussianNoise>0.005</gaussianNoise>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>5</updateRate>  
+        <topicName>sonar_02</topicName>
+        <frameName>sonar_02_link</frameName>
+        <!-- field of view = (max_angle - min_angle) -->
+        <!--               = 2 max_angle -->
+        <fov>0.5</fov>
+        <radiation>ultrasound</radiation>
+      </plugin>
+    </sensor>
+  </gazebo>
+</robot>

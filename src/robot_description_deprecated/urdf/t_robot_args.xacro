@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<!-- Tergeo Washing Floor Robot args -->
+<!-- The laser sensor is strict above the mass center of robot body -->
+<!-- The two motor wheels have the same x coordinates with mass center -->
+<robot name="tergeo_args" xmlns:xacro="TergeoRobotArgs">
+  <!-- *********************************** -->
+  <!-- **** Constants for robot  args **** -->
+  <!-- *********************************** -->
+  <xacro:property name="PI" value="3.1415926535897931"/>
+  <xacro:property name="mass" value="20"/>
+  <!-- Robot body is a box, below is width, height, length of the box -->
+  <!-- Length by x axis, width by y axis, height by z axis -->
+  <xacro:property name="above_groud_height" value="0.2" />
+  <xacro:property name="length" value="0.7"/>  
+  <xacro:property name="width" value="0.4"/> 
+  <xacro:property name="height" value="0.3"/>  
+  <!-- Sensor lidar(cylinder), assign the attribute for length and radius -->
+  <xacro:property name="lidar_length" value="0.01"/> 
+  <xacro:property name="lidar_radius" value="0.01"/> 
+  <!-- The distance lidar above the robot body(a box)'s top --> 
+  <xacro:property name="lidar_above" value="0.15"/> 
+  <!-- Wheel and caster(cylinder) -->
+  <!-- Assign the attribute for thickness and radius -->
+  <xacro:property name="wheel_thickness" value="0.02"/> 
+  <xacro:property name="wheel_radius" value="0.05"/> 
+  <xacro:property name="caster_thickness" value="0.01"/>
+  <xacro:property name="caster_radius" value="0.01"/> 
+  <!-- Distance between wheels and robot body side -->
+  <!-- This arg determines the y coordinates of wheel -->
+  <xacro:property name="dis_robot_wheel" value="0.01"/>
+
+</robot>

@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<robot name="tergeo" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:property name="always_on" value="true" />
+  <xacro:property name="topic_name" value="imu" />
+  <xacro:property name="service_name" value="imu_service" />
+  <xacro:property name="update_rate" value="60" />
+  <!-- gaussian noise -->
+  <!-- same value as rate_mean and accel_mean -->
+  <xacro:property name="g_noise" value="0.0" />
+
+  <xacro:property name="rate_mean" value="${g_noise}" />
+  <xacro:property name="rate_std" value="2e-4" />
+  <xacro:property name="rate_bias_mean" value="0.0000075" />
+  <xacro:property name="rate_bias_std" value="0.0000008" />
+  <xacro:property name="acc_mean" value="${g_noise}" />
+  <xacro:property name="acc_std" value="1.7e-2" />
+  <xacro:property name="acc_bias_mean" value="0.1" />
+  <xacro:property name="acc_bias_std" value="0.001" />
+
+</robot>

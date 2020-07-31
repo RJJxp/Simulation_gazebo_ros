@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<robot name="tergeo" xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- Import rviz color -->
+  <xacro:include filename="$(find tergeo_description)/urdf/rviz_material.xacro" />
+  <!-- Import macro -->
+  <xacro:include filename="$(find tergeo_description)/urdf/macro/*.xacro" />
+
+  <xacro:base_model base_name="base" parent_link="world" />
+  <xacro:lidar_model lidar_name="lidar" parent_link="base_link" />
+
+
+</robot>

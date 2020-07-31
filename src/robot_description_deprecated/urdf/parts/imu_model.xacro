@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="tergeo">
+  <!-- args -->
+  <xacro:include filename="$(find robot_description)/urdf/parts_cfg/imu_cfg.xacro" ns="imu" />
+
+  <!-- Macro definition -->
+  <xacro:macro name="imu_model" params="imu_name parent_link">
+    <!-- imu joint -->
+    <joint name="${imu_name}_joint" type="fixed">
+      <parent link="${parent_link}"/>
+      <child link="${imu_name}_link"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+  
+    <!-- imu link -->
+    <link name="${imu_name}_link"/>
+
+    <!-- gazebo element -->
+    <!-- imu link in gazebo -->
+    <gazebo reference="${imu_name}_link">
+      <sensor type="imu" name="${imu_name}">
+        <always_on>true</always_on>
+        <visualize>false</visualize>
+      </sensor>
+      <material>Gazebo/FlatBlack</material>
+    </gazebo>
+
+    <gazebo>
+      <plugin name="${imu_name}_plugin" filename="libgazebo_ros_imu.so">
+        <alwaysOn>${imu.always_on}</alwaysOn>
+        <bodyName>${imu_name}_link</bodyName>
+        <frameName>${imu_name}_link</frameName>
+        <topicName>${imu.topic_name}</topicName>
+        <serviceName>${imu.service_name}</serviceName>
+        <gaussianNoise>${imu.g_noise}</gaussianNoise>
+        <updateRate>${imu.update_rate}</updateRate>
+        <imu>
+          <noise>
+            <type>gaussian</type>
+            <rate>
+              <mean>${imu.rate_mean}</mean>
+              <stddev>${imu.rate_std}</stddev>
+              <bias_mean>${imu.rate_bias_mean}</bias_mean>
+              <bias_stddev>${imu.rate_bias_std}</bias_stddev>
+            </rate>
+            <accel>
+              <mean>${imu.acc_mean}</mean>
+              <stddev>${imu.acc_std}</stddev>
+              <bias_mean>${imu.acc_bias_mean}</bias_mean>
+              <bias_stddev>${imu.acc_bias_std}</bias_stddev>
+            </accel>
+          </noise>
+        </imu>
+      </plugin>
+    </gazebo>
+
+  </xacro:macro>
+</robot>

@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="tergeo">
+  
+  <!-- Import args -->
+  <xacro:include filename="$(find robot_description)/urdf/parts_cfg/base_world_cfg.xacro" ns="base" />
+  <xacro:include filename="$(find robot_description)/urdf/parts_cfg/wheel_cfg.xacro" ns="wheel" />
+  <xacro:include filename="$(find robot_description)/urdf/parts_cfg/caster_cfg.xacro" ns="caster" />
+
+  <xacro:macro name="caster_model" params="caster_name parent_link">
+
+    <xacro:if value="${'back' in caster_name}">
+      <xacro:property name="caster_xyz" value="${-(base.length/2)} 0 ${-(base.height/2+caster.height/2-wheel.z_dis)}" />
+    </xacro:if>
+
+    <xacro:if value="${'front' in caster_name}">
+      <xacro:property name="caster_xyz" value="${+(base.length/2)} 0 ${-(base.height/2+caster.height/2-wheel.z_dis)}" />
+    </xacro:if>
+    
+    <joint name="${caster_name}_joint" type="fixed">
+      <parent link="${parent_link}"/>
+      <child link="${caster_name}_link"/>
+      <origin xyz="${caster_xyz}" rpy="${caster.rpy}"/>
+    </joint>
+
+    <!-- caseter link -->
+    <link name="${caster_name}_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="${caster.length} ${caster.width} ${caster.height}"/>
+        </geometry>
+        <material name="white" />
+      </visual>
+      
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="${caster.length} ${caster.width} ${caster.height}"/>
+        </geometry>
+      </collision>
+
+      <inertial>
+        <origin xyz="0 0 0" />
+        <mass value="${caster.mass}" />
+        <inertia ixx="0.000" ixy="0.0" ixz="0.0"
+                 iyy="0.000" iyz="0.0"
+                 izz="0.000" />
+      </inertial>
+    </link>
+
+    <!-- gazebo element -->
+    <gazebo reference="${caster_name}_link">
+      <mu1>${caster.mu1}</mu1>
+      <mu2>${caster.mu2}</mu2>
+      <kp>${caster.kp}</kp>
+      <kd>${caster.kd}</kd>
+      <minDepth>${caster.min_depth}</minDepth>
+      <maxVel>${caster.max_vel}</maxVel>
+      <material>Gazebo/FlatBlack</material>
+      <selfCollide>false</selfCollide>
+    </gazebo>
+
+  </xacro:macro>
+
+</robot>

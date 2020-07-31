@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!-- Tergeo Washing Floor Robot -->
+<!-- args for base_world model -->
+<robot name="tergeo" xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- visual size of the robot  -->
+  <xacro:property name="length" value="0.7" />
+  <xacro:property name="width" value="0.4" />
+  <xacro:property name="height" value="0.3" />
+</robot>

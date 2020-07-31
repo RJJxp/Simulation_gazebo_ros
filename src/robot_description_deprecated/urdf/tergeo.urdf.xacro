@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!-- Tergeo Washing Floor Robot -->
+<robot name="tergeo" xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- Import all designed robot model args  -->
+  <!-- <xacro:include filename="$(find robot_description)/urdf/t_robot_args.xacro"/> -->
+  
+  <!-- Import Rviz colors -->
+  <xacro:include filename="$(find robot_description)/urdf/rviz_materials.xacro"/>
+  
+  <!-- Import all the macros -->
+  <xacro:include filename="$(find robot_description)/urdf/parts/*.xacro"/>
+
+  <!-- This macro generates a ${body_name}_link -->
+  <xacro:base_world world_name="base_world" body_name="body" />
+
+  <!-- This macro generates the lidar model -->
+  <xacro:lidar_model lidar_name="top_lidar16" parent_link="body_link" />
+
+  <!-- This macro generates left wheel -->
+  <xacro:wheel_model wheel_name="left_wheel" parent_link="body_link" />
+
+  <!-- This macro generates right wheel -->
+  <xacro:wheel_model wheel_name="right_wheel" parent_link="body_link" />
+
+  <!-- This macro setups the control -->
+  <xacro:wheel_control left_wheel_name="left_wheel" right_wheel_name="right_wheel" />
+
+  <!-- This macro generates front caster -->
+  <xacro:caster_model caster_name="front_caster" parent_link="body_link" />
+
+  <!-- This macro generates back caster -->
+  <xacro:caster_model caster_name="back_caster" parent_link="body_link" />
+
+  <!-- This macro generates left sonar -->
+  <!-- <xacro:sonar_model sonar_name="left_sonar" parent_link="body_link" /> -->
+
+  <!-- This macro generates right sonar -->
+  <!-- <xacro:sonar_model sonar_name="right_sonar" parent_link="body_link" /> -->
+
+  <!-- This macro generates imu -->
+  <xacro:imu_model imu_name="imu" parent_link="body_link" />
+
+</robot>

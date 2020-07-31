@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<robot name="tergeo" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- Import the cfg -->
+  <xacro:include filename="$(find robot_description)/urdf/parts_cfg/base_world_cfg.xacro" ns="base" />
+  <!-- Math args -->
+  <xacro:property name="PI" value="3.1415926535897931" />
+  <!-- Lidar extrinsic -->
+  <xacro:property name="mass" value="1.0" />
+  <xacro:property name="height" value="0.02" />
+  <xacro:property name="radius" value="0.02" />
+  <!-- This arg will be deprecated soon -->
+  <xacro:property name="above_height" value="0.15" />
+  <!-- TODO: xyz -->
+  <xacro:property name="xyz" value="0 0 ${above_height+base.height/2+height/2}" />
+  <xacro:property name="rpy" value="0 0 0" />
+  <xacro:property name="axis" value="0 0 1" />
+  <!-- Lidar intrinsic -->
+  <xacro:property name="h_sample" value="180" />
+  <xacro:property name="h_min_angle" value="${-90 *PI/180.0}" />
+  <xacro:property name="h_max_angle" value="${+90 *PI/180.0}" />
+  <xacro:property name="v_sample" value="16" />
+  <xacro:property name="v_min_angle" value="${-15.0 *PI/180.0}" />
+  <xacro:property name="v_max_angle" value="${+15.0 *PI/180.0}" />
+  <xacro:property name="min_range" value="0.2" />
+  <xacro:property name="max_range" value="100.0" />
+  <xacro:property name="range_res" value="0.01" />
+  <xacro:property name="min_intensity" value="0.001" />
+  <xacro:property name="gaussian_noise" value="0.02" />
+  <!-- others -->
+  <xacro:property name="visualize" value="false" />
+  <xacro:property name="update_rate" value="10" />
+  <xacro:property name="pub_topic_name" value="/sensor/lidar16/top/pointcloud" />
+
+</robot>

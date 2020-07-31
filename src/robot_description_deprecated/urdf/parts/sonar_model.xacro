@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="tergeo">
+
+<xacro:include filename="$(find robot_description)/urdf/parts_cfg/sonar_cfg.xacro" ns="sonar" />
+
+<xacro:macro name="sonar_model" params="sonar_name parent_link">
+
+  <xacro:if value="${'left' in sonar_name}">
+      <xacro:property name="sonar_xyz" value="${sonar.left_xyz}" />
+      <xacro:property name="sonar_rpy" value="${sonar.left_rpy}" />
+  </xacro:if>
+  <xacro:if value="${'right' in sonar_name}">
+      <xacro:property name="sonar_xyz" value="${sonar.right_xyz}" />
+      <xacro:property name="sonar_rpy" value="${sonar.right_rpy}" />
+  </xacro:if>
+
+  <!-- sonar joint -->
+  <joint name="${sonar_name}_joint" type="fixed">
+    <parent link="${parent_link}" />
+    <child link="${sonar_name}_link" />
+    <origin xyz="${sonar_xyz}" rpy="${sonar_rpy}" />
+  </joint>
+  <!-- sonar link -->
+  <link name="${sonar_name}_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+      <material name="brown" />
+    </visual>
+    
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.001" />
+      <inertia ixx="0.000" ixy="0.0" ixz="0.0"
+               iyy="0.000" iyz="0.0"
+               izz="0.000" />
+    </inertial>
+  </link>
+
+  <!-- gazebo element -->
+  <!-- sonar plugin -->
+  <gazebo reference="${sonar_name}_link">
+    <material>Gazebo/ZincYellow</material>
+    <sensor type="ray" name="${sonar_name}">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>${sonar.visualize}</visualize>
+      <update_rate>${sonar.update_rate}</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>${sonar.h_sample}</samples>
+            <resolution>1.0</resolution>
+            <min_angle>${sonar.h_min_angle}</min_angle>
+            <max_angle>${sonar.h_max_angle}</max_angle>
+          </horizontal>
+          <vertical>
+            <samples>${sonar.v_sample}</samples>
+            <resolution>1</resolution>
+            <min_angle>${sonar.v_min_angle}</min_angle>
+            <max_angle>${sonar.v_max_angle}</max_angle>
+          </vertical>
+        </scan>
+        <range>
+          <min>${sonar.min_range}</min>
+          <max>${sonar.max_range}</max>
+          <resolution>${sonar.range_res}</resolution>
+        </range>
+      </ray>
+      <plugin name="${sonar_name}_plugin" filename="libgazebo_ros_range.so">
+        <gaussianNoise>${sonar.g_noise}</gaussianNoise>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>${sonar.update_rate}</updateRate>  
+        <topicName>${sonar_name}</topicName>
+        <frameName>${sonar_name}_link</frameName>
+        <fov>${sonar.fov}</fov>
+        <radiation>ultrasound</radiation>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+</xacro:macro>
+
+</robot>

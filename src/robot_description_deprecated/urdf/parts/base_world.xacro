@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="tergeo">
+  
+  <!-- include corresponding config file -->
+  <xacro:include filename="$(find robot_description)/urdf/parts_cfg/base_world_cfg.xacro" ns="base" />
+  <!-- macro to generate world and robot main body -->
+  <xacro:macro name="base_world" params="world_name body_name">
+    <!-- base world link in rviz -->
+    <link name="${world_name}"/>
+
+    <joint name="${world_name}_${body_name}_joint" type="fixed">
+      <parent link="${world_name}"/>
+      <child link="${body_name}_link"/>
+      <origin xyz="0.0 0.0 ${base.height/2+base.above_groud_height}" rpy="0 0 0"/>
+    </joint>
+
+    <link name="${body_name}_link">
+      <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+        <geometry>
+          <box size="${base.length} ${base.width} ${base.height}"/>
+        </geometry>
+        <material name="orange"/>
+      </visual>
+
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+        <geometry>
+          <box size="${base.length} ${base.width} ${base.height}"/>
+        </geometry>
+      </collision>
+
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="${base.mass}"/>
+        <inertia ixx="0.0000" ixy="0.00000" ixz="0.00000"
+                iyy="0.0000" iyz="0.00000"
+                izz="0.0000" />
+      </inertial>
+    </link>
+
+    <!-- robot body color in gazebo gui -->
+    <gazebo reference="${body_name}_link">
+      <material>Gazebo/Orange</material>
+    </gazebo>
+
+  </xacro:macro>
+
+</robot>

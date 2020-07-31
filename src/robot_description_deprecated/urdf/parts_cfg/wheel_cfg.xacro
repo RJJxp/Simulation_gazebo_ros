@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<robot name="tergeo" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- Math args -->
+  <xacro:property name="PI" value="3.1415926535897931" />
+  <!-- Wheel extrinsic -->
+  <xacro:property name="rpy" value="${-PI/2} 0 0" />`
+  <xacro:property name="axis" value="0 0 1" />
+  <xacro:property name="mass" value="1.00" />
+  <xacro:property name="thickness" value="0.02" /> 
+  <xacro:property name="radius" value="0.10" />
+  <!-- <xacro:property name="ixxiyy" value="0.0" />
+  <xacro:property name="izz" value="0.0" /> -->
+  <xacro:property name="ixxiyy" value="${mass*(3*radius*radius+thickness*thickness)/12}" />
+  <xacro:property name="izz" value="${mass*radius*radius/2}" />
+  <xacro:property name="y_dis" value="0.01" />
+  <xacro:property name="z_dis" value="0.05" />
+  <!-- Wheel intrinsic -->
+  <xacro:property name="mu1" value="50.0" />
+  <xacro:property name="mu2" value="50.0" />
+  <xacro:property name="kp" value="500000.0" />
+  <xacro:property name="kd" value="10.0" />
+  <xacro:property name="min_depth" value="0.001" />
+  <xacro:property name="max_vel" value="10.0" />
+  <xacro:property name="fdir1" value="1 0 0" />
+  <!-- Control args -->
+  <xacro:property name="sub_cmd_topic" value="cmd_vel" />
+  <xacro:property name="pub_odom_topic" value="odom" />
+  <xacro:property name="odom_frame" value="odom" />
+  <xacro:property name="odom_src" value="world" />
+  <xacro:property name="update_rate" value="30" />
+  <xacro:property name="accel" value="1" />
+  <xacro:property name="torque" value="5" />
+  
+</robot>

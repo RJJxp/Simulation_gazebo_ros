@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<robot name="tergeo" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find tb_modify_description)/urdf/macro/cfg_base.xacro" ns="base" />
+
+  <!-- Math -->
+  <xacro:property name="PI" value="3.1415926535897931" />
+  <!-- The all sonars' position -->
+  <!-- Append the sonars you need -->
+  <!-- Here is only 2 examples for simple car -->
+  <xacro:property name="left_xyz" value="0 ${+(base.width/2+0.01)} 0" />
+  <xacro:property name="left_rpy" value="0 0 ${PI/2}" />
+  <xacro:property name="right_xyz" value="0 ${-(base.width/2+0.01)} 0" />
+  <xacro:property name="right_rpy" value="0 0 ${-PI/2}" />
+
+  <!-- sonar size is fixed to -->
+  <!-- length:0.01, width:0.01, height:0.01 -->
+  <!-- sonar mass is fixed to 0.01 kg -->
+  <xacro:property name="visualize" value="true" />
+  <xacro:property name="update_rate" value="5" />
+  <!-- fov unit is degree, positive value-->
+  <xacro:property name="fov" value="${30*PI/180.0}" />
+  <xacro:property name="sample" value="5" />
+  <xacro:property name="h_sample" value="${sample}" />
+  <xacro:property name="h_min_angle" value="${-fov/2}" />
+  <xacro:property name="h_max_angle" value="${+fov/2}" />
+  <xacro:property name="v_sample" value="${sample}" />
+  <xacro:property name="v_min_angle" value="${-fov/2}" />
+  <xacro:property name="v_max_angle" value="${+fov/2}" />
+  <xacro:property name="min_range" value="0.1" />
+  <xacro:property name="max_range" value="0.3" />
+  <xacro:property name="range_res" value="0.01" />
+
+  <xacro:property name="g_noise" value="0.005" />
+  
+
+</robot>

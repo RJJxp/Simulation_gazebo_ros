@@ -1,0 +1,311 @@
+<?xml version="1.0"?>
+<!-- Tergeo Washing Floor Robot -->
+<robot name="tergeo" xmlns:xacro="TergeoRobot">
+  
+  <!-- Import all designed robot model args  -->
+  <xacro:include filename="$(find robot_description)/urdf/t_robot_args.xacro"/>
+  <!-- Import all macros to simply the xacro -->
+  <!-- Macros depends on properties in t_robot_args.xacro -->
+  <!-- <xacro:include filename="$(find robot_description)/urdf/t_robot_macros.xacro"/> -->
+  <!-- Import Rviz colors -->
+  <xacro:include filename="$(find robot_description)/urdf/rviz_materials.xacro"/>
+  <!-- Import all Gazebo-customization elements, including Gazebo colors -->
+  <xacro:include filename="$(find robot_description)/urdf/t_robot.gazebo.xacro"/>
+
+  <!-- This link is similar with world link, just a name -->
+  <link name="base_world"/>
+
+  <!-- TODO: type="fixed" or type="floating" -->
+  <joint name="world_robot_joint" type="fixed">
+    <parent link="base_world"/>
+    <child link="robot_body_link"/> 
+    <origin xyz="0.0 0.0 ${height/2 + wheel_radius - 0.01}" rpy="0 0 0"/>
+  </joint> 
+
+  <!-- the robot body link -->
+  <link name="robot_body_link"> 
+    <visual>
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${length} ${width} ${height}"/>
+      </geometry>
+      <material name="orange"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${length} ${width} ${height}"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="100"/>
+      <inertia ixx="0.00001" ixy="0.00000" ixz="0.00000"
+               iyy="0.00001" iyz="0.00000"
+               izz="0.00001" />
+    </inertial>
+  </link>
+
+  <!-- imu joint -->
+  <joint name="imu_joint" type="fixed">
+    <parent link="robot_body_link"/>
+    <child link="imu_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  
+  <!-- imu link -->
+  <link name="imu_link"/>
+
+  <!-- joint of robot body link and laser -->
+  <joint name="body_scan_joint" type="fixed">
+    <parent link="robot_body_link"/>
+    <child link="robot_laser_link"/>
+    <origin xyz="0 0 ${height/2+0.01+lidar_above}" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <!-- laser sensor link -->
+  <link name="robot_laser_link"> 
+    <visual>
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.02" radius="0.02"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.02" radius="0.02"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <mass value="0.01" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+               iyy="0.001" iyz="0.0"
+               izz="0.001" />
+    </inertial>
+  </link>
+
+  <!-- joint of robot body link and left wheel -->
+  <joint name="wheel_left_joint" type="continuous">
+    <parent link="robot_body_link"/>
+    <child link="wheel_left_link"/>
+    <origin xyz="0.0 ${width/2+0.02} ${-height/2}" rpy="${-PI/2} 0 0"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <link name="wheel_left_link">
+    <visual>
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.02" radius="0.1"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.02" radius="0.1"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="1" />
+      <inertia ixx="0.0025" ixy="0" ixz="0"
+               iyy="0.0025" iyz="0"
+               izz="0.005" />
+    </inertial>
+  </link>
+
+  <transmission name="wheel_left_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="wheel_left_joint">
+      <hardwareInterface>VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="wheel_left_motor">
+      <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <!-- joint of robot body link and right wheel -->
+  <joint name="wheel_right_joint" type="continuous">
+    <parent link="robot_body_link"/>
+    <child link="wheel_right_link"/>
+    <origin xyz="0.0 ${-width/2-0.02} ${-height/2}" rpy="${-PI/2} 0 0"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <link name="wheel_right_link">
+    <visual>
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.02" radius="0.1"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.02" radius="0.1"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="1" />
+      <inertia ixx="0.0025" ixy="0" ixz="0"
+               iyy="0.0025" iyz="0"
+               izz="0.005" />
+    </inertial>
+  </link>
+
+  <transmission name="wheel_right_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="wheel_right_joint">
+      <hardwareInterface>VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="wheel_right_motor">
+      <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <!-- caster back joint -->
+  <joint name="caster_back_joint" type="fixed">
+    <parent link="robot_body_link"/>
+    <child link="caster_back_link"/>
+    <origin xyz="${-length/2} 0 ${-height/2-0.05}" rpy="0 0 0"/>
+  </joint>
+  <!-- caseter back link -->
+  <link name="caster_back_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.030 0.03 0.10"/>
+      </geometry>
+      <material name="white" />
+    </visual>
+    
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.03 0.03 0.10"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="1" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+               iyy="0.001" iyz="0.0"
+               izz="0.001" />
+    </inertial>
+  </link>
+
+  <!-- caster front joint -->
+  <joint name="caster_front_joint" type="fixed">
+    <parent link="robot_body_link"/>
+    <child link="caster_front_link"/>
+    <origin xyz="${length/2} 0 ${-height/2-0.05}" rpy="0 0 0"/>
+  </joint>
+  <!-- caster front link -->
+  <link name="caster_front_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.03 0.03 0.10"/>
+      </geometry>
+      <material name="white" />
+    </visual>
+    
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.03 0.03 0.10"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="1" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+               iyy="0.001" iyz="0.0"
+               izz="0.001" />
+    </inertial>
+  </link>
+
+  <!-- sonar joint -->
+  <joint name="sonar_01_joint" type="fixed">
+    <parent link="robot_body_link"/>
+    <child link="sonar_01_link"/>
+    <origin xyz="${length/6} ${width/2+0.01} 0" rpy="0 0 ${PI/2}"/>
+  </joint>
+  <!-- sonar link -->
+  <link name="sonar_01_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+      <material name="brown" />
+    </visual>
+    
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.001" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+               iyy="0.001" iyz="0.0"
+               izz="0.001" />
+    </inertial>
+  </link>
+
+
+  <!-- sonar joint -->
+  <joint name="sonar_02_joint" type="fixed">
+    <parent link="robot_body_link"/>
+    <child link="sonar_02_link"/>
+    <origin xyz="${length/6} ${-width/2-0.01} 0" rpy="0 0 ${-PI/2}"/>
+  </joint>
+  <!-- sonar link -->
+  <link name="sonar_02_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+      <material name="brown" />
+    </visual>
+    
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.001" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+               iyy="0.001" iyz="0.0"
+               izz="0.001" />
+    </inertial>
+  </link>
+</robot>

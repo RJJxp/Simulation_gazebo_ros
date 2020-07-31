@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<robot name="tergeo" xmlns:xacro="http://ros.org/wiki/xacro">
+  
+  <!-- Arg depends on cfg file -->
+  <xacro:include filename="$(find robot_description)/urdf/parts_cfg/wheel_cfg.xacro" ns="wheel" />
+
+  <xacro:property name="height" value="${wheel.radius}" />
+  <xacro:property name="length" value="0.03" />
+  <xacro:property name="width" value="0.03" />
+  <xacro:property name="rpy" value="0 0 0" />
+  <!-- Caster intrinsic -->
+  <xacro:property name="mass" value="0.1" />
+  <xacro:property name="mu1" value="0.0" />
+  <xacro:property name="mu2" value="0.0" />
+  <xacro:property name="kp" value="500000.0" />
+  <xacro:property name="kd" value="10.0" />
+  <xacro:property name="min_depth" value="0.001" />
+  <xacro:property name="max_vel" value="1.0" />
+
+</robot>
