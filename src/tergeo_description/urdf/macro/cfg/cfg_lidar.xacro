@@ -17,7 +17,7 @@
   <xacro:property name="min_intensity" value="0.001" />
   <xacro:property name="gaussian_noise" value="0.02" />
   <!-- others -->
-  <xacro:property name="visualize" value="true" />
+  <xacro:property name="visualize" value="false" />
   <xacro:property name="update_rate" value="10" />
   <xacro:property name="pub_topic_name" value="/sensor/lidar16/top/pointcloud" />
 
