@@ -9,12 +9,12 @@
       <parent link="${parent_link}"/>
       <child link="${lidar_name}_link"/>
       <!-- <origin xyz="-0.032 0 0.172" rpy="0 0 0"/> -->
-      <origin xyz="-0.032 0 0.172" rpy="0 0 0"/>
+      <origin xyz="-0.032 0 ${lidar.height+0.172}" rpy="0 0 0"/>
     </joint>
     
     <link name="${lidar_name}_link">
       <visual>
-        <origin xyz="0 0 ${lidar.height}" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="package://tergeo_description/meshes/sensors/lds.stl" scale="0.001 0.001 0.001"/>
         </geometry>

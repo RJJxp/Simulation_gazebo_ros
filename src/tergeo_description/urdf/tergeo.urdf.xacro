@@ -12,7 +12,7 @@
   <xacro:control_model left_wheel_name="left_wheel" right_wheel_name="right_wheel" world_link="base_world" />  
   <xacro:caster_model caster_name="back_caster" parent_link="base_link" />
   <xacro:imu_model imu_name="imu" parent_link="base_link" />
-  <!-- <xacro:sonar_model sonar_name="left_sonar" parent_link="base_link" /> -->
-  <!-- <xacro:sonar_model sonar_name="right_sonar" parent_link="base_link" /> -->
+  <xacro:sonar_model sonar_name="left_sonar" parent_link="base_link" />
+  <xacro:sonar_model sonar_name="right_sonar" parent_link="base_link" />
 
 </robot>
