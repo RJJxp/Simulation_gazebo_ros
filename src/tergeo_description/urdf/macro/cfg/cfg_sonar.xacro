@@ -16,7 +16,7 @@
   <!-- sonar size is fixed to -->
   <!-- length:0.01, width:0.01, height:0.01 -->
   <!-- sonar mass is fixed to 0.01 kg -->
-  <xacro:property name="visualize" value="true" />
+  <xacro:property name="visualize" value="false" />
   <xacro:property name="update_rate" value="5" />
   <!-- fov unit is degree, positive value-->
   <xacro:property name="fov" value="${30*PI/180.0}" />
