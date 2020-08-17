@@ -7,4 +7,4 @@ cd ${CURRENT_PATH}
 source ../devel_isolated/setup.bash
 
 # show in rviz
-roslaunch robot_gz tb_show_in_rviz.launch 
+roslaunch tergeo_gazebo rviz.launch 

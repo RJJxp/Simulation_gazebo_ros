@@ -4,5 +4,7 @@ set -ue
 CURRENT_PATH=$(cd `dirname $0`; pwd)
 cd ${CURRENT_PATH}
 
+source ../devel_isolated/setup.bash
+
 # show in rviz
-roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+roslaunch tergeo_teleop keyboard_teleop.launch 
