@@ -18,4 +18,8 @@
   <buildtool_depend>catkin</buildtool_depend>
   <depend>urdf</depend>
   <depend>xacro</depend>
+  <depend>gazebo_ros</depend>
+  <export>
+    <gazebo_ros gazebo_model_path="${prefix}/sdf" />
+  </export>
 </package>

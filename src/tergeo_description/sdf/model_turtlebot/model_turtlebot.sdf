@@ -1,0 +1,274 @@
+<?xml version='1.0'?>
+<sdf version='1.5'>
+  <model name='model'>
+
+    <!-- body and caster -->
+    <link name='base_link'>
+      <pose>0 0 0.01 0 0 0</pose>
+
+      <!-- body -->
+      <visual name='base_visual'>
+        <pose>-0.032 0.0 0.0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <!-- see details in element <export> in package.xml -->
+            <uri>model://model_turtlebot/meshes/sc65b.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <!-- Gazebo/Orange -->
+          <ambient>1 0.5088 0.0468 1</ambient>
+          <diffuse>1 0.5088 0.0468 1</diffuse>
+          <specular>0.5 0.5 0.5 128</specular>
+        </material>
+      </visual>
+
+      <collision name='body_collision'>
+        <pose>-0.032 0 0.070 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.140 0.140 0.143</size>
+          </box>
+        </geometry>
+      </collision>
+
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>8.2573504e-01</mass>
+        <inertia>
+          <ixx>2.2124416e-03</ixx>
+          <iyy>2.1193702e-03</iyy>
+          <izz>2.0064271e-03</izz>
+          <ixy>-1.2294101e-05</ixy>
+          <ixz>3.4938785e-05</ixz>
+          <iyz>-5.0120904e-06</iyz>
+        </inertia>
+      </inertial>
+    </link>
+    
+    <!-- left wheel joint -->
+    <joint name='left_wheel_joint' type='revolute'>
+      <parent>base_link</parent>
+      <child>left_wheel_link</child>
+      <axis>
+        <use_parent_model_frame>true</use_parent_model_frame>
+        <xyz>0 1 0</xyz>
+      </axis>
+    </joint>
+
+    <!-- left wheel link -->
+    <link name='left_wheel_link'>
+      <pose>0.0 0.08 0.033 -1.570796326 0 0</pose>
+      <visual name='left_wheel_visual'>
+        <pose>0.0 0.0 0.0 1.570796326 0.0 0.0</pose>
+        <geometry>
+          <mesh> 
+            <scale>0.001 0.001 0.001</scale>
+            <uri>model://model_turtlebot/meshes/wheels/left_tire.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient> 0 1 0 </ambient>
+          <diffuse> 0 1 0 </diffuse>
+          <specular> 0.1 0.1 0.1 1 1 </specular>
+        </material>
+      </visual>
+
+      <collision name='left_wheel_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.033</radius>
+            <length>0.018</length>
+          </cylinder>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.1</mu>
+              <mu2>0.1</mu2>
+              <fdir1>1 0 0</fdir1>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+              <kp>500000.000000</kp>
+              <kd>10.000000</kd>
+              <max_vel>0.1</max_vel>
+              <min_depth>0.001</min_depth>
+            </ode>
+          </contact>
+        </surface>
+      </collision>
+
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>2.8498940e-02</mass>
+        <inertia>
+          <ixx>1.1175580e-05</ixx>
+          <iyy>1.1192413e-05</iyy>
+          <izz>2.0712558e-05</izz>
+          <ixy>-4.2369783e-11</ixy>
+          <ixz>-5.9381719e-09</ixz>
+          <iyz>-1.4400107e-11</iyz>
+        </inertia>
+      </inertial>
+    </link>
+
+    <!-- right wheel joint -->
+    <joint name='right_wheel_joint' type='revolute'>
+      <parent>base_link</parent>
+      <child>right_wheel_link</child>
+      <axis>
+        <use_parent_model_frame>true</use_parent_model_frame>
+        <xyz>0 1 0</xyz>
+      </axis>
+    </joint>
+
+    <!-- right wheel link -->
+    <link name='right_wheel_link'>
+      <pose>0.0 -0.08 0.033 -1.570796326 0 0</pose>
+      <visual name='right_wheel_visual'>
+        <pose>0.0 0.0 0.0 1.570796326 0.0 0.0</pose>
+        <geometry>
+          <mesh> 
+            <scale>0.001 0.001 0.001</scale>
+            <uri>model://model_turtlebot/meshes/wheels/right_tire.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient> 0 1 0 </ambient>
+          <diffuse> 0 1 0 </diffuse>
+          <specular> 0.1 0.1 0.1 1 1 </specular>
+        </material>
+      </visual>
+
+      <collision name='right_wheel_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.033</radius>
+            <length>0.018</length>
+          </cylinder>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.1</mu>
+              <mu2>0.1</mu2>
+              <fdir1>1 0 0</fdir1>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+              <kp>500000.000000</kp>
+              <kd>10.000000</kd>
+              <max_vel>0.1</max_vel>
+              <min_depth>0.001</min_depth>
+            </ode>
+          </contact>
+        </surface>
+      </collision>
+
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>2.8498940e-02</mass>
+        <inertia>
+          <ixx>1.1175580e-05</ixx>
+          <iyy>1.1192413e-05</iyy>
+          <izz>2.0712558e-05</izz>
+          <ixy>-4.2369783e-11</ixy>
+          <ixz>-5.9381719e-09</ixz>
+          <iyz>-1.4400107e-11</iyz>
+        </inertia>
+      </inertial>
+    </link>
+    
+    <!-- model plugin  -->
+    <!-- diff drive plugin -->
+    <plugin name="tergeo_controller" filename="libgazebo_ros_diff_drive.so">
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <odometrySource>world</odometrySource>
+      <publishOdomTF>true</publishOdomTF>
+      <robotBaseFrame>world</robotBaseFrame>
+      <publishWheelTF>false</publishWheelTF>
+      <publishTf>true</publishTf>
+      <publishWheelJointState>true</publishWheelJointState>
+      <legacyMode>false</legacyMode>
+      <updateRate>30</updateRate>
+      <leftJoint>left_wheel_joint</leftJoint>
+      <rightJoint>right_wheel_joint</rightJoint>
+      <wheelSeparation>0.160</wheelSeparation>
+      <wheelDiameter>0.066</wheelDiameter>
+      <wheelAcceleration>0.5</wheelAcceleration>
+      <wheelTorque>5</wheelTorque>
+      <rosDebugLevel>na</rosDebugLevel>
+    </plugin>
+    
+    <!-- caster joint -->
+    <joint name='caster_joint' type='fixed'>
+      <parent>base_link</parent>
+      <child>caster_link</child>
+    </joint>
+
+    <!-- caster link -->
+    <link name='caster_link'>
+      <pose>-0.081 0.0 0.006 -1.570796326 0 0</pose>
+      <visual name='caster_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.030 0.009 0.020</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient> 1 1 0 1 </ambient>
+          <diffuse> 1 1 0 1 </diffuse>
+          <specular> 0 0 0 0 0 </specular>
+        </material>
+      </visual>
+
+      <collision name='caster_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.030 0.009 0.020</size>
+          </box>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.1</mu>
+              <mu2>0.1</mu2>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+              <kp>1000000.000000</kp>
+              <kd>100.000000</kd>
+              <max_vel>1.0</max_vel>
+              <min_depth>0.001</min_depth>
+            </ode>
+          </contact>
+        </surface>
+      </collision>
+
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.005</mass>
+        <inertia>
+          <ixx>0.001</ixx>
+          <iyy>0.001</iyy>
+          <izz>0.001</izz>
+          <ixy>0.000</ixy>
+          <ixz>0.000</ixz>
+          <iyz>0.000</iyz>
+        </inertia>
+      </inertial>
+    </link>
+    
+  </model>
+</sdf>

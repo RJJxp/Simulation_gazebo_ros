@@ -10,6 +10,7 @@ project(tergeo_description)
 find_package(catkin REQUIRED COMPONENTS
   urdf
   xacro
+  gazebo_ros
 )
 
 ################################################################################
