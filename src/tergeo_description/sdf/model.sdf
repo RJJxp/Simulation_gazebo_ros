@@ -1,0 +1,483 @@
+<?xml version='1.0'?>
+<sdf version='1.5'>
+  <model name='model'>
+
+    <!-- body and caster -->
+    <link name='chassis_link'>
+      <pose>0 0 0.3 0 0 0</pose>
+
+      <!-- body -->
+      <visual name='body_visual'>
+        <geometry>
+          <box>
+            <size>0.7 0.4 0.3</size>
+          </box>
+        </geometry>
+        <material>
+          <script>Gazebo/FlatBlack</script>
+        </material>
+      </visual>
+
+      <collision name='body_collision'>
+        <geometry>
+          <box>
+            <size>0.7 0.4 0.3</size>
+          </box>
+        </geometry>
+      </collision>
+
+      <!-- caster -->
+      <visual name='caster_visual'>
+        <pose>-0.3 0 -0.2 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.1</radius>
+          </sphere>
+        </geometry>
+      </visual>
+
+      <collision name='caster_collision'>
+        <pose>-0.3 0 -0.2 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.1</radius>
+          </sphere>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0</mu>
+              <mu2>0</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+
+      <!-- link inertial -->
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>10</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <iyy>0</iyy>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+    </link>
+
+    <!-- left wheel link -->
+    <link name='left_wheel_link'>
+      <pose>0.3 -0.25 0.1 0 1.5707 1.5707</pose>
+      <visual name='left_wheel_visual'>
+        <geometry>
+          <cylinder>
+            <radius>0.1</radius>
+            <length>0.05</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>Gazebo/DarkYellow</script>
+        </material>
+      </visual>
+
+      <collision name='left_wheel_collision'>
+        <geometry>
+          <cylinder>
+            <radius>0.1</radius>
+            <length>0.05</length>
+          </cylinder>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.1</mu>
+              <mu2>0.1</mu2>
+              <fdir1>1 0 0</fdir1>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+              <kp>500000.000000</kp>
+              <kd>10.000000</kd>
+              <max_vel>0.1</max_vel>
+              <min_depth>0.001</min_depth>
+            </ode>
+          </contact>
+        </surface>
+      </collision>
+    </link>
+
+    <!-- joint of body and left wheel -->
+    <joint type='revolute' name='left_wheel_joint'>
+      <parent>chassis_link</parent>
+      <child>left_wheel_link</child>
+      <pose>0 0 0 0 0 0</pose>
+      <axis>
+        <use_parent_model_frame>true</use_parent_model_frame>
+        <xyz>0 1 0</xyz>
+      </axis>
+    </joint>
+
+    <!-- right wheel link -->
+    <link name='right_wheel_link'>
+      <pose>0.3 0.25 0.1 0 1.5707 1.5707</pose>
+      <visual name='right_wheel_visual'>
+        <geometry>
+          <cylinder>
+            <radius>0.1</radius>
+            <length>0.05</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <!-- Gazebo/ZincYellow -->
+          <ambient> 0.9725 0.9529 0.2078 1 </ambient>
+          <diffuse> 0.9725 0.9529 0.2078 1 </diffuse>
+          <specular> 0.9725 0.9529 0.2078 1 1 </specular>
+        </material>
+      </visual>
+
+      <collision name='right_wheel_collision'>
+        <geometry>
+          <cylinder>
+            <radius>0.1</radius>
+            <length>0.05</length>
+          </cylinder>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.1</mu>
+              <mu2>0.1</mu2>
+              <fdir1>1 0 0</fdir1>
+            </ode>
+          </friction>
+          <contact>
+            <ode>
+              <kp>500000.000000</kp>
+              <kd>10.000000</kd>
+              <max_vel>0.1</max_vel>
+              <min_depth>0.001</min_depth>
+            </ode>
+          </contact>
+        </surface>
+      </collision>
+    </link>
+
+    <!-- joint of body and right wheel -->
+    <joint type='revolute' name='right_wheel_joint'>
+      <parent>chassis_link</parent>
+      <child>right_wheel_link</child>
+      <pose>0 0 0 0 0 0</pose>
+      <axis>
+        <use_parent_model_frame>true</use_parent_model_frame>
+        <xyz>0 1 0</xyz>
+      </axis>
+    </joint>
+    
+    <!-- model plugin  -->
+    <!-- diff drive plugin -->
+    <plugin name="tergeo_controller" filename="libgazebo_ros_diff_drive.so">
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <odometrySource>world</odometrySource>
+      <publishOdomTF>true</publishOdomTF>
+      <robotBaseFrame>world</robotBaseFrame>
+      <publishWheelTF>false</publishWheelTF>
+      <publishTf>true</publishTf>
+      <publishWheelJointState>true</publishWheelJointState>
+      <legacyMode>false</legacyMode>
+      <updateRate>30</updateRate>
+      <leftJoint>left_wheel_joint</leftJoint>
+      <rightJoint>right_wheel_joint</rightJoint>
+      <wheelSeparation>0.45</wheelSeparation>
+      <wheelDiameter>0.2</wheelDiameter>
+      <wheelAcceleration>1</wheelAcceleration>
+      <wheelTorque>10</wheelTorque>
+      <rosDebugLevel>na</rosDebugLevel>
+    </plugin>
+      
+    <!-- imu link -->
+    <link name='imu_link'>
+      <pose>0 0 0.3 0 0 0</pose>
+      <visual name='imu_visual'>
+        <geometry>
+          <box>
+            <size>0.01 0.01 0.01</size>
+          </box>
+        </geometry>
+        <material>
+          <script>Gazebo/FlatBlack</script>
+        </material>
+      </visual>
+      <sensor type="imu" name='imu_sensor'>
+        <always_on>true</always_on>
+        <visualize>false</visualize>
+        <imu>
+          <linear_acceleration>
+            <x>
+              <noise type='gaussian'>
+                <mean>0.0</mean>
+                <stddev>2e-4</stddev>
+                <bias_mean>0.0000075</bias_mean>
+                <bias_stddev>0.0000008</bias_stddev>
+              </noise>
+            </x>
+          </linear_acceleration>
+        </imu>
+        <!-- model plugin for imu -->
+        <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+          <topicName>/sensor/imu/center/pose</topicName>
+          <bodyName>imu_link</bodyName>
+          <frameName>imu_link</frameName>
+          <serviceName>imu_service</serviceName>
+          <gaussianNoise>0.0</gaussianNoise>
+          <updateRateHZ>60</updateRateHZ>
+          <xyzOffset>0 0 0</xyzOffset>
+          <rpyOffset>0 0 0</rpyOffset>
+        </plugin>
+      </sensor>
+    </link>
+    
+    <!-- joint for body and imu -->
+    <joint type="fixed" name="imu_joint">
+      <parent>chassis_link</parent>
+      <child>imu_link</child>
+      <pose>0 0 0 0 0 0</pose>
+    </joint>
+
+    <!-- left sonar link -->
+    <link name="left_sonar_link">
+      <pose>0.3 -0.2 0.3 0 0 0</pose>
+      <visual name='left_sonar_visual'>
+        <geometry>
+          <box>
+            <size>0.01 0.01 0.01</size>
+          </box>
+        </geometry>
+      </visual>
+
+      <collision name='left_sonar_collision'>
+        <geometry>
+          <box>
+            <size>0.01 0.01 0.01</size>
+          </box>
+        </geometry>
+      </collision>
+
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.1</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <iyy>0</iyy>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+
+      <sensor type="ray" name="left_sonar_sensor">
+        <pose>0 0 0 0 0 0</pose>
+        <visualize>true</visualize>
+        <update_rate>5</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>5</samples>
+              <resolution>1.0</resolution>
+              <min_angle>-0.1309</min_angle>
+              <max_angle>0.1309</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>5</samples>
+              <resolution>1</resolution>
+              <min_angle>-0.1309</min_angle>
+              <max_angle>0.1309</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>0.1</min>
+            <max>0.3</max>
+            <resolution>0.01</resolution>
+          </range>
+        </ray>
+        <!-- sensor plugin for sonar -->
+        <plugin name="left_sonar_plugin" filename="libgazebo_ros_range.so">
+          <gaussianNoise>0.005</gaussianNoise>
+          <alwaysOn>true</alwaysOn>
+          <updateRate>5</updateRate>
+          <topicName>left_sonar_sensor</topicName>
+          <frameName>left_sonar_link</frameName>
+          <fov>0.2618</fov>
+          <radiation>ultrasound</radiation>
+        </plugin>
+      </sensor>
+    </link>
+
+    <!-- joint for body and left sonar -->
+    <joint type="fixed" name='left_sonar_joint'>
+      <parent>chassis_link</parent>
+      <child>left_sonar_link</child>
+      <pose>0 0 0 0 0 0</pose>
+    </joint>
+
+    <!-- right sonar link -->
+    <link name="right_sonar_link">
+      <pose>0.3 0.2 0.3 0 0 0</pose>
+      <visual name='right_sonar_visual'>
+        <geometry>
+          <box>
+            <size>0.01 0.01 0.01</size>
+          </box>
+        </geometry>
+      </visual>
+
+      <collision name='right_sonar_collision'>
+        <geometry>
+          <box>
+            <size>0.01 0.01 0.01</size>
+          </box>
+        </geometry>
+      </collision>
+
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.1</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <iyy>0</iyy>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+
+      <sensor type="ray" name="right_sonar_sensor">
+        <pose>0 0 0 0 0 0</pose>
+        <visualize>true</visualize>
+        <update_rate>5</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>5</samples>
+              <resolution>1.0</resolution>
+              <min_angle>-0.1309</min_angle>
+              <max_angle>0.1309</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>5</samples>
+              <resolution>1</resolution>
+              <min_angle>-0.1309</min_angle>
+              <max_angle>0.1309</max_angle>
+            </vertical>
+          </scan>
+            <range>
+              <min>0.1</min>
+              <max>0.3</max>
+              <resolution>0.01</resolution>
+            </range>
+        </ray>
+        <!-- sensor plugin for sonar -->
+        <plugin name="right_sonar_plugin" filename="libgazebo_ros_range.so">
+          <gaussianNoise>0.005</gaussianNoise>
+          <alwaysOn>true</alwaysOn>
+          <updateRate>5</updateRate>
+          <topicName>right_sonar_sensor</topicName>
+          <frameName>right_sonar_link</frameName>
+          <fov>0.2618</fov>
+          <radiation>ultrasound</radiation>
+        </plugin>
+      </sensor>
+    </link>
+
+    <!-- joint for body and right sonar -->
+    <joint type="fixed" name='right_sonar_joint'>
+      <parent>chassis_link</parent>
+      <child>right_sonar_link</child>
+      <pose>0 0 0 0 0 0</pose>
+    </joint>
+
+    <!-- lidar link -->
+    <link name="lidar_link">
+      <pose>0 0 0.7 0 0 0</pose>
+      <visual name='lidar_visual'>
+        <geometry>
+          <cylinder>
+            <radius>0.055</radius>
+            <length>0.0315</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>Gazebo/Purple</script>
+        </material>
+      </visual>
+
+      <collision name='lidar_collision'>
+        <geometry>
+          <cylinder>
+            <radius>0.055</radius>
+            <length>0.0315</length>
+          </cylinder>
+        </geometry>
+      </collision>
+
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.1</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <iyy>0</iyy>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+
+      <sensor type="ray" name="laser_16">
+        <pose>0 0 0 0 0 0</pose>
+        <always_on>true</always_on>
+        <visualize>false</visualize>
+        <update_rate>10</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>180</samples>
+              <resolution>1</resolution>
+              <min_angle>-3.1415</min_angle>
+              <max_angle>3.1415</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>16</samples>
+              <resolution>1</resolution>
+              <min_angle>-0.2618</min_angle>
+              <max_angle>0.2618</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>0.2</min>
+            <max>100</max>
+            <resolution>0.02</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.0</stddev>
+          </noise>
+        </ray>
+        <!-- sensor plugin for lidar -->
+        <plugin name="lidar_sensor" filename="libgazebo_ros_velodyne_laser.so">
+          <robotNamespace>tergeo</robotNamespace>
+          <topicName>/sensor/lidar16/top/pointcloud</topicName>
+          <frameName>top_lidar16_link</frameName>
+          <min_range>0.2</min_range>
+          <max_range>100</max_range>
+          <!-- <min_intensity>0.001</min_intensity> -->
+          <gaussianNoise>0.02</gaussianNoise>
+        </plugin>
+      </sensor>
+    </link>
+
+    <!-- joint for body and lidar -->
+    <joint type="fixed" name='lidar_joint'>
+      <parent>chassis_link</parent>
+      <child>lidar_link</child>
+      <pose>0 0 0 0 0 0</pose>
+    </joint>
+      
+  </model>
+</sdf>
